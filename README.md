@@ -1,5 +1,7 @@
 # Hungry-Elephants
 
+### Current Python Version: 3.8.5
+
 Installing and Running the Server
 ---------------------------------
 
