@@ -1,0 +1,30 @@
+# LAST_READ_UNIX_TIME(for the pi to archive/delete its local data)
+1612444415
+# FUTURE TODO TASKS
+# The program will activate feeder AMOUNT times if the program loads this list after the EXECUTE_AFTER_UNIX_TIME. 
+# Last five data fields can be skiped and will default to 1,A0,0_0,43200,1; which means dispence one dose of food regardless of tag and antenna status, the task can be executed once and will expire in 12 hours since the start time.
+# By default TODO list item will expire after 12 hours(43200 seconds).
+# It may be wise to have an upper limit for the amount of food dispended.
+# The TODO file intepreter will only execute one TODO task one time for each feeder connected. Only the first line for each feeder will be executed thus later lines will be blocked by previous lines
+# The TODO file intepreter will subtract count from the list if the task have been completed and all tasks with a count of one (or lower) will be removed
+# The TODO file intepreter will read feeder status from files under folder feeder_status and an artificial limit of 16 feeders can be connected to each system.
+# EXECUTE_AFTER_UNIX_TIME,TARGET_PI_SD_UUID(for error checking),TARGET_FEEDER_NUMBER,AMOUNT(times of feeder activates in one go),IF_RECIEVE_FROM_ANTENNA_NUMBER,IF_RECIEVE_FROM_TAG_NUMBER,LIFE_TIME,REPEAT_X_TIMES
+1612444444,9037cd54-4535-4d41-8003-ed874bfb441e,F1,1
+1612444555,9037cd54-4535-4d41-8003-ed874bfb441e,F2,1
+1612444666,9037cd54-4535-4d41-8003-ed874bfb441e,F2,3
+1612444777,9037cd54-4535-4d41-8003-ed874bfb441e,F1,4
+1612444888,9037cd54-4535-4d41-8003-ed874bfb441e,F1,1,A1,900_226000923031,10000,2
+1612444888,9037cd54-4535-4d41-8003-ed874bfb441e,F1,1,A2,900_226000923031,100,1
+1612444888,9037cd54-4535-4d41-8003-ed874bfb441e,F2,1,A3,900_226000923031,5000,4
+1612444888,9037cd54-4535-4d41-8003-ed874bfb441e,F2,1,A4,900_226000923031,10000,2
+1612444999,9037cd54-4535-4d41-8003-ed874bfb441e,F1,1,A1,900_226000923031,10000
+1612445999,9037cd54-4535-4d41-8003-ed874bfb441e,F1,1,A1,900_226000923031
+1612444899,9037cd54-4535-4d41-8003-ed874bfb441e,F1,1,A1,0_0
+1612444799,9037cd54-4535-4d41-8003-ed874bfb441e,F1,1,A0,900_226000923031
+1612444699,9037cd54-4535-4d41-8003-ed874bfb441e,F1,1,A1,900_226000923031
+1612444599,9037cd54-4535-4d41-8003-ed874bfb441e,F2,1,A2,900_226000923031
+1612444499,9037cd54-4535-4d41-8003-ed874bfb441e,F3,1,A3,900_226000923031
+1612444399,9037cd54-4535-4d41-8003-ed874bfb441e,F4,1,A4,900_226000923031
+1612444888,9037cd54-4535-4d41-8003-ac123456789d,F1
+# The following line means for all time after UNIX Epoch +1s, one the pi with an SD card UUID of "9037cd54...", when any antenna detected tag 900_226000923030, activate all feeders connected dispensing one dose, the task can be repeated for 365k times and the task will expire around year 2077
+1,9037cd54-4535-4d41-8003-ed874bfb441e,F0,1,A0,900_226000923030,3376684800,365000
