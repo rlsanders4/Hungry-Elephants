@@ -2,3 +2,5 @@
 .venv
 .vscode
 website/db.sqlite3
+# test files:
+website/adminops/static/adminops/test.png
