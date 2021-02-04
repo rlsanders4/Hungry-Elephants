@@ -21,4 +21,7 @@ urlpatterns = [
     #delete this path below- I did this just for testing
     path('', include('elephants.urls')),
     path('admin/', admin.site.urls),
+    path('admin/site/', admin.site.urls),
+    path('admin/', include('adminops.urls', namespace='adminops')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

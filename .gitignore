@@ -1,3 +1,4 @@
 # gitignore file. Put venv folders, databases, etc. here.
 .venv
+.vscode
 website/db.sqlite3
