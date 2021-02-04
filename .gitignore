@@ -1,6 +1,7 @@
-# gitignore file. Put venv folders, databases, etc. here.
+# gitignore file. Put venv folders, databases, pycache etc. here.
 .venv
 .vscode
+__pycache__/
 website/db.sqlite3
 # test files:
 website/adminops/static/adminops/test.png
