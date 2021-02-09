@@ -1,3 +1,5 @@
 # gitignore file. Put venv folders, databases, etc. here.
 .venv
+.vscode
+__pycache__/
 website/db.sqlite3

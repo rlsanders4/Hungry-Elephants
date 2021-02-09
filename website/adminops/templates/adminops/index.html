@@ -1,0 +1,11 @@
+{% extends "adminops/base.html" %}
+
+{% block content %}
+
+{% url 'logout' as logout_url %}
+{% url 'admin:index' as siteadmin_url %}
+
+<h1>ADMIN PAGE</h1>
+<a href="{{ siteadmin_url }}">Go to website administration</a>
+<a href="{{ logout_url }}">Log out</a>
+{% endblock %}
