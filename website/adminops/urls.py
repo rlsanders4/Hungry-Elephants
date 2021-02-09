@@ -7,4 +7,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('pisetup', views.pisetup, name='pisetup'),
     path('piedit', views.piedit, name='piedit'),
+    path('pilist', views.pilist, name='pilist'),
+    path('pidelete', views.pidelete, name='pidelete'),
 ]

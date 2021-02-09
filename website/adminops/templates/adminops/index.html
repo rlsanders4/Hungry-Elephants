@@ -3,20 +3,39 @@
 
 {% block content %}
 
+<!-- set URLs -->
 {% url 'logout' as logout_url %}
+{% url 'adminops:index' as admin_url %}
 {% url 'admin:index' as siteadmin_url %}
 {% url 'adminops:pisetup' as pisetup_url %}
+{% url 'adminops:pilist' as pirefresh_url %}
+{% url 'adminops:piedit' as piedit_url %}
+{% url 'adminops:pidelete' as pidelete_url %}
 
-<h1>ADMIN PAGE</h1>
+<div class="container p-3">
+    <h1 class="display-4 text-center">Administration</h1>
+    <div class="text-center">
+        <a href="{{ admin_url }}" class="btn btn-link bg-light font-weight-bold">Administration Home</a>
+        <a href="{{ siteadmin_url }}" class="btn btn-link bg-light">Site Administration</a>
+    </div>
+</div>
+<div class="container">
+    <p class="text-center">
+        <a href="{{ pisetup_url }}" class="btn btn-primary">Connect a Raspberry Pi</a>
+    </p>
+    <p class="text-center">
+        <a class="btn btn-primary" id="refresh" href="{{ admin_url }}">Refresh</a>
+    </p>
+    <div>
+        {% include "adminops/pilist.html" %}
+    </div>
+</div>
 
-{% include "adminops/pilist.html" %}
+<!--img src="{% static 'adminops/test.png' %}"-->
 
-<img src="{% static 'adminops/test.png' %}">
-
-<a href="{{ pisetup_url }}">Connect a new Raspberry Pi</a>
-
-<a href="{{ siteadmin_url }}">Go to website administration</a>
-
-<a href="{{ logout_url }}">Log out</a>
+<!-- Set the pageurl variable to be passed to the JS -->
+<script>
+    var pageurl = "{{ request.path }}";
+</script>
 
 {% endblock %}
