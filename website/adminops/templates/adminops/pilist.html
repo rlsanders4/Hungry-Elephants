@@ -1,0 +1,38 @@
+{% load static %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">IP</th>
+            <th scope="col">Port</th>
+            <th scope="col">Path</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pi in pis %}
+            <tr>
+                <td>{{ pi.ip }}</td>
+                <td>{{ pi.port }}</td>
+                <td>{{ pi.path }}</td>
+                {% if pi.connected %}
+                    <td class="text-success">Connected</td>
+                {% else %}
+                    <td class="text-danger">Not Connected</td>
+                {% endif %}
+                <td class="float-right">
+                    <div class="row">
+                        <div class="col">
+                            <!-- TODO: implement -->
+                            <button class="btn btn-secondary">Edit</button>
+                        </div>
+                        <div class="col">
+                            <!-- TODO: use JS to ask if user is sure -->
+                            <a class="btn btn-danger" href="{{ pidelete_url }}?id={{ pi.id }}">Delete</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
