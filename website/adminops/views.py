@@ -11,4 +11,12 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 @staff_member_required
 def index(request):
-    return render(request, 'adminops/index.html')
+    return render(request, 'adminops/index.html', {"name": "Hungry Elephants Administration"})
+
+@staff_member_required
+def pisetup(request):
+    return render(request, 'adminops/pisetup.html')
+
+@staff_member_required
+def piedit(request):
+    return render(request, 'adminops/piedit.html', {"ip": request.GET['ip']})

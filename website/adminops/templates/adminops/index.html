@@ -5,9 +5,18 @@
 
 {% url 'logout' as logout_url %}
 {% url 'admin:index' as siteadmin_url %}
+{% url 'adminops:pisetup' as pisetup_url %}
 
 <h1>ADMIN PAGE</h1>
+
+{% include "adminops/pilist.html" %}
+
 <img src="{% static 'adminops/test.png' %}">
+
+<a href="{{ pisetup_url }}">Connect a new Raspberry Pi</a>
+
 <a href="{{ siteadmin_url }}">Go to website administration</a>
+
 <a href="{{ logout_url }}">Log out</a>
+
 {% endblock %}
