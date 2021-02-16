@@ -6,6 +6,7 @@ from django.db import migrations
 def initializepis(apps, schema_editor):
     #create a few pi objects
     pi1 = Pi()
+    pi1.name = "pi A"
     pi1.ip = "192.168.1.1"
     pi1.port = 1234
     pi1.path = "smb://someserver"
@@ -13,6 +14,7 @@ def initializepis(apps, schema_editor):
     pi1.save()
 
     pi2 = Pi()
+    pi2.name = "pi B"
     pi2.ip = "192.168.1.2"
     pi2.port = 1234
     pi2.path = "smb://someserver2"
@@ -20,6 +22,7 @@ def initializepis(apps, schema_editor):
     pi2.save()
 
     pi3 = Pi()
+    pi3.name = "pi C"
     pi3.ip = "192.168.1.3"
     pi3.port = 1234
     pi3.path = "smb://someserver3"
