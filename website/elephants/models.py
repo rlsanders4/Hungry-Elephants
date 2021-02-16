@@ -19,8 +19,6 @@ A schedule includes the following:
     Interval Length
     Max # of Feeds
 '''
-
-
 class Schedule(models.Model):
     elephant = models.ForeignKey(Elephant, on_delete=models.CASCADE)  # reference to existing elephant in DB
     start_time = models.DateTimeField()  # start time
@@ -28,8 +26,10 @@ class Schedule(models.Model):
     interval = models.DurationField()  # minimum waiting time before repeated feeds to elephant
     max_feeds = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])  # max number of times this schedule can allow feeding the elephant
     name = models.CharField(max_length=50, null=True)
+    default = models.BooleanField(default=False)
 
     def __str__(self):
         if(self.name):
             return self.name
         return "Schedule: " + str(self.id)
+
