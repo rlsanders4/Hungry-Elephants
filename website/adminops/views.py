@@ -23,6 +23,7 @@ def pisetup(request):
     if request.method == "POST":
         form = PiForm(request.POST)
         if form.is_valid():
+            # process the data in form.cleaned_data as required
             pi = Pi()
             pi.ip = request.POST["ip"]
             pi.port = request.POST["port"]
