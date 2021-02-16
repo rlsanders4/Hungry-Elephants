@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            {{name}}
+        </title>
+        {% include "adminops/bootstrap.html" %}
+    </head>
+    <body>
+        {% include "elephants/navbar.html" %}
+        {% block content %}
+        {% endblock %}
+        <script src="{% static 'adminops/nav.js' %}"></script>
+    </body>
+</html>
