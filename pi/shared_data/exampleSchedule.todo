@@ -8,7 +8,8 @@
 # The TODO file interpreter will only execute one TODO task one time for each feeder connected. Only the first line for each feeder will be executed thus later lines will be blocked by previous lines
 # The TODO file interpreter will subtract count from the list if the task have been completed and all tasks with a count of one (or lower) will be removed
 # The TODO file interpreter will read feeder status from files under folder feeder_status and an artificial limit of 16 feeders can be connected to each system.
-# TASK_UUID,EXECUTE_AFTER_UNIX_TIME,TARGET_SITE_CODE,TARGET_FEEDER_NUMBER,AMOUNT(times of feeder activates in one go),IF_RECIEVE_FROM_ANTENNA_NUMBER,IF_RECIEVE_FROM_TAG_NUMBER,INTERVAL_TIME,EXPIRE_TIME,REPEAT_X_TIMES
+# TASK_UUID,EXECUTE_AFTER_UNIX_TIME,TARGET_SITE_CODE,TARGET_FEEDER_NUMBER,AMOUNT(times of feeder activates in one go),
+# IF_RECIEVE_FROM_ANTENNA_NUMBER,IF_RECIEVE_FROM_TAG_NUMBER,INTERVAL_TIME,EXPIRE_TIME,REPEAT_X_TIMES
 1605f11d-83e0-4f33-8c6f-c126e72196b2,1612444444,AAA,F1,1
 3424c3fc-b638-490c-b92d-e3d3c4b9b2c5,1612444555,AAB,F2,1
 7b5f796e-0ab3-4e53-8450-89ac34fe71d8,1612444666,SSS,F2,3
@@ -26,5 +27,5 @@ aaec4e1e-f740-47f5-80c3-b8bfbc7934e4,1612444999,AAA,F1,1,A1,900_226000923031,180
 5f36662b-27cb-44c7-8853-b0abeacffcf5,1612444499,AAA,F3,1,A3,900_226000923031
 ef2c4bc6-a1a3-4ce1-aa86-a0045e59e0e4,1612444399,AAA,F4,1,A4,900_226000923031
 d8393bf6-eefa-4891-8610-f9415a25dd58,1612444888,AAA,F1
-# The following line means for all time after UNIX Epoch +1s, one the pi with an SD card UUID of "9037cd54...", when any antenna detected tag 900_226000923030, activate all feeders connected dispensing one dose, the task can be repeated every second for 365k times and the task will expire around year 2077
+# The following line means for all time after UNIX Epoch +1s, if the station have a code of AAA, when any antenna detected tag 900_226000923030, activate all feeders connected dispensing one dose, the task can be repeated every second for 365k times and the task will expire around year 2077
 2393e77f-cb82-4ab1-8e9d-5519ebfba8ee,1,AAA,F0,1,A0,900_226000923030,1,3376684800,365000
