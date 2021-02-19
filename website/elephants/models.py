@@ -26,6 +26,8 @@ class Schedule(models.Model):
     interval = models.DurationField()  # minimum waiting time before repeated feeds to elephant
     max_feeds = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])  # max number of times this schedule can allow feeding the elephant
     name = models.CharField(max_length=50, null=True)
+    # add feeder at some point
+    # delete the default field
     default = models.BooleanField(default=False)
 
     def __str__(self):
