@@ -7,5 +7,8 @@ app_name = 'elephants'
 urlpatterns = [
     path('', views.index, name='index'),
     path('feeders', views.feeders, name='feeders'),
-    path('scheduling', views.scheduling, name='scheduling')
+    path('scheduling', views.scheduling, name='scheduling'),
+    path('presetscheduling', views.preset_scheduling, name='presetscheduling'),
+    path('preset-manager', views.default_presets_manager, name='preset_manager'),
+    path('markpreset', views.markpreset, name='markpreset')
 ]

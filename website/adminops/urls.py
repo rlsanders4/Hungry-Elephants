@@ -9,4 +9,8 @@ urlpatterns = [
     path('piedit', views.piedit, name='piedit'),
     path('pilist', views.pilist, name='pilist'),
     path('pidelete', views.pidelete, name='pidelete'),
+    path('piedit/feedersetup', views.feedersetup, name='feedersetup'),
+    path('piedit/antennasetup', views.antennasetup, name='antennasetup'),
+    path('piedit/feederdelete', views.feederdelete, name='feederdelete'),
+    path('piedit/antennadelete', views.antennadelete, name='antennadelete'),
 ]
