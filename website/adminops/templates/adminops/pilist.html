@@ -2,16 +2,20 @@
 <table class="table">
     <thead>
         <tr>
+            <th scope="col">Name</th>
             <th scope="col">IP</th>
             <th scope="col">Port</th>
             <th scope="col">Path</th>
             <th scope="col">Status</th>
+            <th scope="col"># Feeders</th>
+            <th scope="col"># Antennas</th>
             <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
         {% for pi in pis %}
             <tr>
+                <td>{{ pi.name }}</td>
                 <td>{{ pi.ip }}</td>
                 <td>{{ pi.port }}</td>
                 <td>{{ pi.path }}</td>
@@ -20,11 +24,12 @@
                 {% else %}
                     <td class="text-danger">Not Connected</td>
                 {% endif %}
+                <td>{{ pi.feeders }}</td>
+                <td>{{ pi.antennas }}</td>
                 <td class="float-right">
                     <div class="row">
                         <div class="col">
-                            <!-- TODO: implement -->
-                            <button class="btn btn-secondary">Edit</button>
+                            <a class="btn btn-secondary" href="{{ piedit_url }}?id={{ pi.id }}">Edit</a>
                         </div>
                         <div class="col">
                             <!-- TODO: use JS to ask if user is sure -->

@@ -5,8 +5,10 @@
 
 <!-- set URLs -->
 {% url 'adminops:index' as admin_url %}
+{% url 'adminops:piedit' as piedit_url %}
 {% url 'admin:index' as siteadmin_url %}
 {% url 'adminops:pisetup' as pisetup_url %}
+{% url 'adminops:antennasetup' as antennasetup_url %}
 
 <div class="container p-3">
     <h1 class="display-4 text-center">Administration</h1>
@@ -18,14 +20,15 @@
 
 <div class="container">
     <p class="text-center">
-        <a href="{{ admin_url }}" class="btn btn-secondary">Go Back</a>
+        <a href="{{ piedit_url }}?id={{ pi.id }}" class="btn btn-secondary">Go Back</a>
     </p>
 </div>
 
 <div class="container">
-    <form action="{{ pisetup_url }}" method="post">
+    <form action="{{ antennasetup_url }}" method="post">
         {% csrf_token %}
         {{ form }}
+        <input type="hidden" id="pid" name="pid" value="{{ pi.id }}">
         <input type="submit" value="Submit">
     </form>
 </div>
