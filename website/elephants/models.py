@@ -9,6 +9,18 @@ class Elephant(models.Model):
     def __str__(self):
         return self.name
 
+'''
+A preset is a group of schedules that can be executed all at once with the server controller
+A preset contain:
+    name (of the preset)
+
+Note: the Schedule will handle the many-to-many relationship
+'''
+class Preset(models.Model):
+    name = models.CharField(max_length=14)
+
+    def __str__(self):
+        return self.name
 
 ''' 
 The Schedule model class represents the basic building block for automated elephant feeding.
@@ -29,9 +41,15 @@ class Schedule(models.Model):
     # add feeder at some point
     # delete the default field
     default = models.BooleanField(default=False)
+    presets = models.ManyToManyField(Preset)
 
     def __str__(self):
         if(self.name):
             return self.name
         return "Schedule: " + str(self.id)
+
+
+
+
+
 
