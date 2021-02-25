@@ -14,7 +14,6 @@ class ScheduleForm(forms.Form):
     end_time = forms.DateTimeField(initial=datetime.now()+timedelta(hours=8))
     interval = forms.DurationField()
     max_feeds = forms.IntegerField()
-    default = forms.BooleanField()
     '''
     ['%Y-%m-%d %H:%M:%S',    # '2006-10-25 14:30:59'
      '%Y-%m-%d %H:%M',       # '2006-10-25 14:30'

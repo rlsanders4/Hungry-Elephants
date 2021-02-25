@@ -14,4 +14,6 @@ urlpatterns = [
     path('custom', views.custom, name='custom'),
     path('presets', views.presets, name='presets'),
     path('schedule', views.schedule, name='schedule'),
+    path('editpreset', views.edit_preset_page, name='editpresetpage')
+
 ]
