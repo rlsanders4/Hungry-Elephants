@@ -3,12 +3,12 @@
 # WAITING status means the feeder is idle and ready for task
 # BUZY means the feeder is actively trying to dispense food
 # COMPLETE means the feeder just completed a task and is waiting the TODO list intepreter to remove the active task
-AAA,F1,3,BUZY,1605f11d-83e0-4f33-8c6f-c126e72196b2
-AAA,F2,5,BUZY,ad0f5493-c5e7-4e7b-b008-af19ce768e75
-AAA,F3,7,BUZY,5f36662b-27cb-44c7-8853-b0abeacffcf5
-AAA,F4,8,BUZY,ef2c4bc6-a1a3-4ce1-aa86-a0045e59e0e4
-# AAA,F1,3,BUZY,1605f11d-83e0-4f33-8c6f-c126e72196b2
-# ABC,F1,3,COMPLETE,3424c3fc-b638-490c-b92d-e3d3c4b9b2c5
+AAA,F1,2,COMPLETE,1605f11d-83e0-4f33-8c6f-c126e72196b2
+AAA,F2,3,COMPLETE,ad0f5493-c5e7-4e7b-b008-af19ce768e75
+AAA,F3,4,BUZY,5f36662b-27cb-44c7-8853-b0abeacffcf5
+AAA,F4,14,COMPLETE,ef2c4bc6-a1a3-4ce1-aa86-a0045e59e0e4
+# AAA,F1,2,BUZY,1605f11d-83e0-4f33-8c6f-c126e72196b2
+# ABC,F1,2,COMPLETE,3424c3fc-b638-490c-b92d-e3d3c4b9b2c5
 # This file is designed in this way so that it may be easier to implement cross-pi interaction (so the TODO task status can be synced across multiple Pis)
 # It is also possible to have multiple tasks completed but not deleted(subtracted counts) if so wanted later in development
 # This file only signals one completion of task, aka the tasks with a REPEAT_X_TIMES counter higher than 1 will not be deleted from the TODO list even it is signaled completed here. 
