@@ -15,11 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from adminops.views import *
 
 urlpatterns = [
     path('elephants/', include('elephants.urls')),
     path('admin/site/', admin.site.urls),
     path('admin/', include('adminops.urls', namespace='adminops')),
-    path('accounts/', include('django.contrib.auth.urls')),
+    #path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/login/', CustomLoginView.as_view(), name='login'),
+    path('accounts/logout/', CustomLogoutView.as_view(), name='logout'),
+    path('accounts/passwordreset/', CustomPasswordResetView.as_view(), name='password_reset'),
     path('datalog/', include('datalog.urls')),
 ]

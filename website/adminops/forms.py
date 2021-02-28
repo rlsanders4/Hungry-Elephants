@@ -4,7 +4,7 @@ from adminops.models import *
 class PiForm(ModelForm):
     class Meta:
         model = Pi
-        fields = ['name','ip', 'port', 'path']
+        fields = ['name','ip', 'port', 'path', 'site_code']
 
 class FeederForm(ModelForm):
     class Meta:

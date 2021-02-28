@@ -12,10 +12,14 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.urls.conf import path
 from adminops.models import *
 from adminops.forms import *
+from django.contrib.auth.views import *
 
 @staff_member_required
 def index(request):
     pis = Pi.objects.all()
+    for pi in pis:
+        pi.feeders = Feeder.objects.filter(connected_to=pi.id).count()
+        pi.antennas = Antenna.objects.filter(connected_to=pi.id).count()
     return render(request, 'adminops/index.html', {"name": "Hungry Elephants Administration", "pis": pis})
 
 @staff_member_required
@@ -133,3 +137,17 @@ def antennadelete(request):
     antenna = Antenna.objects.get(id=request.GET["id"])
     antenna.delete()
     return redirect("/admin/piedit?id="+str(pi.id))
+
+# login view
+class CustomLoginView(LoginView):
+    template_name = "registration/login.html"
+    extra_context = {'next':'/elephants/'}
+    
+# logout view
+class CustomLogoutView(LogoutView):
+    template_name = "registration/logout.html"
+    next_page = '/accounts/login'
+
+# password reset view
+class CustomPasswordResetView(PasswordResetView):
+    template_name = "registration/passwordreset.html"

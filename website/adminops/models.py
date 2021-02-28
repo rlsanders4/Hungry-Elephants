@@ -11,6 +11,8 @@ class Pi(models.Model):
     #TODO: verification for server paths
     path = models.CharField(max_length=200) #path of file server
     connected = models.BooleanField(default=False)
+    # ASK FOR SITE CODE
+    site_code = models.CharField(max_length=10, default="AAA") #site code associated with reader box and antennas
 
 # Feeder Model
 class Feeder(models.Model):
