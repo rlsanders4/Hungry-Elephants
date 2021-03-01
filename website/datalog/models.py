@@ -3,7 +3,7 @@ from django.db import models
 
 class RFID_tag_number(models.Model):
     
-    name = models.CharField(max_length=)
+    name = models.CharField(max_length=100)
 
     
 class Unix_time(models.Model):

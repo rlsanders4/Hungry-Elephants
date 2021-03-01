@@ -18,7 +18,7 @@ from django.urls import path, include
 from adminops.views import *
 
 urlpatterns = [
-    path('elephants/', include('elephants.urls')),
+    path('elephants/', include('elephants.urls', namespace='elephants')),
     path('admin/site/', admin.site.urls),
     path('admin/', include('adminops.urls', namespace='adminops')),
     #path('accounts/', include('django.contrib.auth.urls')),
