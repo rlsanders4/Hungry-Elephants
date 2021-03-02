@@ -1,5 +1,4 @@
 """website URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
 Examples:
@@ -15,15 +14,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from adminops.views import *
 
 urlpatterns = [
     path('elephants/', include('elephants.urls', namespace='elephants')),
     path('admin/site/', admin.site.urls),
     path('admin/', include('adminops.urls', namespace='adminops')),
-    #path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/login/', CustomLoginView.as_view(), name='login'),
-    path('accounts/logout/', CustomLogoutView.as_view(), name='logout'),
-    path('accounts/passwordreset/', CustomPasswordResetView.as_view(), name='password_reset'),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('datalog/', include('datalog.urls')),
 ]

@@ -4,5 +4,5 @@ from . import views
 
 app_name = 'datalog'
 urlpatterns = [
-    path('/', views.base, name='base'),
+    path('', views.index, name='index'),
 ]

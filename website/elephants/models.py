@@ -13,7 +13,6 @@ class Elephant(models.Model):
 A preset is a group of schedules that can be executed all at once with the server controller
 A preset contain:
     name (of the preset)
-
 Note: the Schedule will handle the many-to-many relationship
 '''
 class Preset(models.Model):
@@ -47,9 +46,3 @@ class Schedule(models.Model):
         if(self.name):
             return self.name
         return "Schedule: " + str(self.id)
-
-
-
-
-
-

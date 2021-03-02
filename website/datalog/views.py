@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from .models import FeedingData
 
 # Create your views here.
-def base(request):
-  views_name = "<a href='link'>Click</a>"
-  return  render(request,"base.html", {"name":views_name})
+def index(request):
+    feedingData = FeedingData.objects.all()
+    return render(request, 'datalog/index.html', {'FeedingData':feedingData})
