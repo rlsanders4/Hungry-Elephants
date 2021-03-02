@@ -1,6 +1,5 @@
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-{% url 'elephants:scheduling' as scheduling_url %}
 
 {% include "elephants/navbar.html" %}
 <head>
@@ -9,13 +8,11 @@
 </head>
 <div>
     <table>
-        <tbody>
-            <form action="{{ scheduling_url }}" method="post">
-                {% csrf_token %}
-                {{ form.as_table }}
-                <input type="submit" value="Submit">
-            </form>
-        </tbody>
+        <form action="/elephants/presetscheduling?id={{ presetid }}" method="post">
+            {% csrf_token %}
+            {{ form.as_table }}
+            <input type="submit" value="Submit">
+        </form>
     </table>
 </div>
 
