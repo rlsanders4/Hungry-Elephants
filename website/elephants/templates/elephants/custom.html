@@ -12,32 +12,20 @@
 
 </head>
 
-
 <body>
-
-
-    {% include "elephants/navbar.html" %}
-
+  {% include "elephants/navbar.html" %}
     <br>
     <div class=container>
       <div class="jumbotron">
-        <h1 class="text-center">All Elephants</h1>
+        <h1 class="text-center">Custom Schedule</h1>
       </div>
     </div>
-
     <br>
     <div class="container">
       <div class="d-flex justify-content-center">
-        <div class = "row">
-            <div class ="col">
-                <a href = "launch_preset" class ="btn btn-primary">Preset 1</a>
-            </div>
-            <div class="col">
-                <a href ="/elephants/editpreset?id=1" class = "btn btn-secondary">Edit</a>
-            </div>
-        </div>
+        <a href="/" class="btn btn-primary mr-1">Done</a>
+        <a href="/" class="btn btn-primary mr-1">Cancel</a>
       </div>
-
     </div>
 
     <div class = container>
@@ -48,6 +36,10 @@
               <h5 class="card-title">Elephant 1</h5>
               <p class="card-text">Last fed: 10:00am 2/7/2021<br>Number of feedings today: 2<br>Current schedule ends: 6:00pm 2/7/2021</p>
               <br>
+              <div class="d-flex justify-content-center">
+                <a href="/elephants/feeders" class="btn btn-primary mr-1">Edit Schedule</a>
+                <a href="#" class="btn btn-primary mr-1">Copy Schedule</a>
+              </div>
             </div>
             <div class="card-footer">
               <small class="text-muted">Last updated 3 mins ago</small>
@@ -58,6 +50,10 @@
               <h5 class="card-title">Elephant 2</h5>
               <p class="card-text">Last fed: 10:00am 2/7/2021<br>Number of feedings today: 2<br>Current schedule ends: 6:00pm 2/7/2021</p>
               <br>
+              <div class="d-flex justify-content-center">
+                <a href="/elephants/feeders" class="btn btn-primary mr-1">Edit Schedule</a>
+                <a href="#" class="btn btn-primary mr-1">Copy Schedule</a>
+              </div>
             </div>
             <div class="card-footer">
               <small class="text-muted">Last updated 3 mins ago</small>
@@ -68,6 +64,10 @@
               <h5 class="card-title">Elephant 3</h5>
               <p class="card-text">Last fed: 10:00am 2/7/2021<br>Number of feedings today: 2<br>Current schedule ends: 6:00pm 2/7/2021</p>
               <br>
+              <div class="d-flex justify-content-center">
+                <a href="/elephants/feeders" class="btn btn-primary mr-1">Edit Schedule</a>
+                <a href="#" class="btn btn-primary mr-1">Copy Schedule</a>
+              </div>
             </div>
             <div class="card-footer">
               <small class="text-muted">Last updated 3 mins ago</small>
@@ -81,6 +81,10 @@
               <h5 class="card-title">Elephant 4</h5>
               <p class="card-text">Last fed: 10:00am 2/7/2021<br>Number of feedings today: 2<br>Current schedule ends: 6:00pm 2/7/2021</p>
               <br>
+              <div class="d-flex justify-content-center">
+                <a href="/elephants/feeders" class="btn btn-primary mr-1">Edit Schedule</a>
+                <a href="#" class="btn btn-primary mr-1">Copy Schedule</a>
+              </div>
             </div>
             <div class="card-footer">
               <small class="text-muted">Last updated 3 mins ago</small>
@@ -91,6 +95,10 @@
               <h5 class="card-title">Elephant 5</h5>
               <p class="card-text">Last fed: 10:00am 2/7/2021<br>Number of feedings today: 2<br>Current schedule ends: 6:00pm 2/7/2021</p>
               <br>
+              <div class="d-flex justify-content-center">
+                <a href="/elephants/feeders" class="btn btn-primary mr-1">Edit Schedule</a>
+                <a href="#" class="btn btn-primary mr-1">Copy Schedule</a>
+              </div>
             </div>
             <div class="card-footer">
               <small class="text-muted">Last updated 3 mins ago</small>
@@ -101,6 +109,10 @@
               <h5 class="card-title">Elephant 6</h5>
               <p class="card-text">Last fed: 10:00am 2/7/2021<br>Number of feedings today: 2<br>Current schedule ends: 6:00pm 2/7/2021</p>
               <br>
+              <div class="d-flex justify-content-center">
+                <a href="/elephants/feeders" class="btn btn-primary mr-1">Edit Schedule</a>
+                <a href="#" class="btn btn-primary mr-1">Copy Schedule</a>
+              </div>
             </div>
             <div class="card-footer">
               <small class="text-muted">Last updated 3 mins ago</small>
@@ -108,8 +120,14 @@
           </div>
         </div>
       </div>
-      <br>
     </div>
+    <br>
+    <div class="container">
+      <div class="d-flex justify-content-center">
+        <a href="/" class="btn btn-primary mr-1">Save as preset</a>
+      </div>
+    </div>
+    <br>
     
 </body>
 </html>
