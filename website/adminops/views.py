@@ -27,6 +27,7 @@ def pisetup(request):
     if request.method == "POST":
         form = PiForm(request.POST)
         if form.is_valid():
+            # process the data in form.cleaned_data as required
             pi = Pi()
             pi.name = request.POST["name"]
             pi.ip = request.POST["ip"]
