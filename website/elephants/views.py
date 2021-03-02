@@ -16,6 +16,7 @@ def feeders(request):
     context = {'name': 'Feeders', }
     return render(request, 'elephants/feeders.html', context)
 
+<<<<<<< HEAD
 def scheduling(request):
     if request.method=='POST':
         form = ScheduleForm(request.POST)
@@ -68,3 +69,16 @@ def markpreset(request):
     return default_presets_manager(request)
 
 
+=======
+def custom(request):
+    context = {'name': 'Custom', }
+    return render(request, 'elephants/custom.html', context)
+
+def presets(request):
+    context = {'name': 'Presets', }
+    return render(request, 'elephants/presets.html', context)
+
+def schedule(request):
+    context = {'name': 'Schedule', }
+    return render(request, 'elephants/schedule.html', context)
+>>>>>>> origin/view
