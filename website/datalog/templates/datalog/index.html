@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>{{name}}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'datalog/index.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src = "{% static 'datalog/index.js' %}"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,600,700" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Home</a>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="#">Preset Manager</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Amin</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Data log</a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h2 align="center">Feeding Data</h2> 
+<div style="text-align:center">
+  <button type="button">Refresh</button>
+  <h2>  </h2>
+</div>
+
+
+<table>
+  <tr>
+    <th>Unix Time</th>
+    <th>Site Code</th>
+    <th>Antenna Number</th>
+    <th>RFID Tag Number</th>
+  </tr>
+  <tr>
+    <td>1612444051</td>
+    <td>AAA</td>
+    <td>A1</td>
+    <td>900_226000923031</td>
+  </tr>
+  <tr>
+    <td>1612444165</td>
+    <td>AAA</td>
+    <td>A3</td>
+    <td>900_226000923031</td>
+  </tr>
+  <tr>
+    <td>1612444200</td>
+    <td>AAA</td>
+    <td>A1</td>
+    <td>900_226000923032</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>AAA</td>
+    <td>A1</td>
+    <td>900_226000923033</td>
+  </tr>
+  <tr>
+    <td>1612444188</td>
+    <td>AAA</td>
+    <td>A4</td>
+    <td>900_226000923031</td>
+  </tr>
+  <tr>
+    <td>1612500000</td>
+    <td>AAA</td>
+    <td>A2</td>
+    <td>900_226000923031</td>
+  </tr>
+</table>
+
+</body>
+</html>
+

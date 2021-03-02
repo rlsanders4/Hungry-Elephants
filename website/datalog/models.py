@@ -3,7 +3,7 @@ from django.db import models
 
 class RFID_tag_number(models.Model):
     
-    name = models.CharField(max_length=)
+    name = models.CharField(max_length=10)
 
     
 class Unix_time(models.Model):
@@ -16,7 +16,7 @@ class Site_code(models.Model):
 
 
 
-class Anatenna_number(models.Model):
+class Antenna_number(models.Model):
    
     name = models.CharField(max_length=2)
     
