@@ -6,7 +6,7 @@
 from pi_manager.distributor import Distributor
 
 class ScheduleBuilder():
-    # interval: time interval in ms between schedule pulls
+    # interval: time interval in s between schedule pulls
     # distributor: distributor object
     def __init__(this, interval, distributor):
         this.interval = interval
@@ -26,6 +26,6 @@ class ScheduleBuilder():
     def stop(this):
         return 0
 
-    # get schedules on-demand
-    def get_schedules(this):
+    #optional callback for a schedule update
+    def onScheduleUpdated(this):
         return 0
