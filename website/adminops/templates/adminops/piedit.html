@@ -3,8 +3,91 @@
 
 {% block content %}
 
-<h1>PI EDIT</h1>
+<!-- set URLs -->
+{% url 'adminops:index' as admin_url %}
+{% url 'admin:index' as siteadmin_url %}
+{% url 'adminops:pisetup' as pisetup_url %}
+{% url 'adminops:piedit' as piedit_url %}
+{% url 'adminops:feedersetup' as feedersetup_url %}
+{% url 'adminops:antennasetup' as antennasetup_url %}
+
+<div class="container p-3">
+    <h1 class="display-4 text-center">Administration</h1>
+    <div class="text-center">
+        <a href="{{ admin_url }}" class="btn btn-link bg-light font-weight-bold">Administration Home</a>
+        <a href="{{ siteadmin_url }}" class="btn btn-link bg-light">Site Administration</a>
+    </div>
+</div>
+
+<div class="container">
+    <p class="text-center">
+        <a href="{{ admin_url }}" class="btn btn-secondary">Go Back</a>
+    </p>
+</div>
+
+<table class="table container">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Site Code</th>
+            <th scope="col">IP</th>
+            <th scope="col">Port</th>
+            <th scope="col">Path</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ pi.name }}</td>
+            <td>{{ pi.site_code }}</td>
+            <td>{{ pi.ip }}</td>
+            <td>{{ pi.port }}</td>
+            <td>{{ pi.path }}</td>
+            {% if pi.connected %}
+                <td class="text-success">Connected</td>
+            {% else %}
+                <td class="text-danger">Not Connected</td>
+            {% endif %}
+            <td class="float-right">
+                <div class="row">
+                    <div class="col">
+                        <!-- TODO: use JS to ask if user is sure -->
+                        <a class="btn btn-danger" href="{{ pidelete_url }}?id={{ pi.id }}">Delete</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="container">
+    <p class="text-center">Edit this pi:</p>
+    <form action="{{ piedit_url }}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+<div class="container p-3">
+    {% include 'adminops/feederlist.html' %}
+</div>
+
+<div class="container p-3">
+    {% include 'adminops/antennalist.html' %}
+</div>
+
+<div class="container text-center">
+    <p>Make connections with this pi:</p>
+    <a href="{{ feedersetup_url }}?pid={{ pi.id }}" class="btn btn-primary">Add a Feeder</a>
+    <a href="{{ antennasetup_url }}?pid={{ pi.id }}" class="btn btn-primary">Add an Antenna</a>
+</div>
 
 
+<!-- Set the pageurl variable to be passed to the JS -->
+<script>
+    var pageurl = "/admin/";
+</script>
 
 {% endblock content %}

@@ -1,0 +1,26 @@
+{% load static %}
+{% url 'adminops:antennadelete' as antennadelete_url %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Antenna Name</th>
+            <th scope="col">Tag</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for antenna in antennas %}
+            <tr>
+                <td>{{ antenna.name }}</td>
+                <td>{{ antenna.tag }}</td>
+                <td class="float-right">
+                    <div class="row">
+                        <div class="col">
+                            <a class="btn btn-danger" href="{{ antennadelete_url }}?pid={{ pi.id }}&id={{ antenna.id }}">Delete</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

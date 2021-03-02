@@ -1,0 +1,26 @@
+{% load static %}
+{% url 'adminops:feederdelete' as feederdelete_url %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Feeder Name</th>
+            <th scope="col">Tag</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for feeder in feeders %}
+            <tr>
+                <td>{{ feeder.name }}</td>
+                <td>{{ feeder.tag }}</td>
+                <td class="float-right">
+                    <div class="row">
+                        <div class="col">
+                            <a class="btn btn-danger" href="{{ feederdelete_url }}?pid={{ pi.id }}&id={{ feeder.id }}">Delete</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
