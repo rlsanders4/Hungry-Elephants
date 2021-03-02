@@ -64,42 +64,15 @@ tr:nth-child(even) {
     <th>Antenna Number</th>
     <th>RFID Tag Number</th>
   </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
+  {% for item in FeedingData %}
+    <tr> 
+        <td>{{ item.unix_time }}</td>
+        <td>{{ item.site_code }}</td>
+        <td>{{ item.antenna_number }}</td>
+        <td>{{ item.rfid_tag_number }}</td>
+    </tr>
+    {% endfor %}
+
 </table>
 
 </body>

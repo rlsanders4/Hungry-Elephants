@@ -1,22 +1,11 @@
 from django.db import models
 # Create your models here.
 
-class RFID_tag_number(models.Model):
+class FeedingData(models.Model):
     
-    name = models.CharField(max_length=10)
+    rfid_tag_number = models.CharField(max_length=10)
+    unix_time = models.CharField(max_length=10)
+    site_code = models.CharField(max_length=3)
+    antenna_number = models.CharField(max_length=2)
 
-    
-class Unix_time(models.Model):
-   
-    name = models.CharField(max_length=10)
-
-class Site_code(models.Model):
-   
-    name = models.CharField(max_length=3)
-
-
-
-class Antenna_number(models.Model):
-   
-    name = models.CharField(max_length=2)
     
