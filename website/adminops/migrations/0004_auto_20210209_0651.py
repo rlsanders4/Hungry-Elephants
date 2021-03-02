@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('adminops', '0002_pi'),
+        ('adminops', '0003_initial_pis'),
     ]
 
     operations = [
