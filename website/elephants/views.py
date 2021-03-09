@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from .forms import ScheduleForm
-from .models import Schedule, Preset
+from .models import Schedule, Preset, Elephant
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -75,7 +75,11 @@ def delete_preset_schedule(request):
 
 
 def index(request):
-    context = {'name': 'Hungry Elephants', }
+    elephants = Elephant.objects.all()
+    print(type(elephants))
+    elephants1 = elephants[:3]
+    elephants2 = elephants[3:]
+    context = {'name': 'Hungry Elephants', 'elephants1': elephants1, 'elephants2':elephants2}
     return render(request, 'elephants/index.html', context)
 
 def feeders(request):
