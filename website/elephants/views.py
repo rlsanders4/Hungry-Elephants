@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
-from .forms import ScheduleForm, SelectPresetForm
+from .forms import ScheduleForm
 from .models import Schedule, Preset
 from django.urls import reverse
 from django.shortcuts import redirect
@@ -50,17 +50,6 @@ def preset_scheduling(request):
     return render(request, 'elephants/preset_schedule_module.html', {'presetid':request.GET["id"], 'form':form})
 
 
-def default_presets_manager(request):
-    schedules = Schedule.objects.filter(default=False)
-    form = SelectPresetForm()
-    context = {'non_defaults': schedules, 'selectpresetform':form}
-    return render(request, 'elephants/default_schedule_selection.html', context)
-
-def markpreset(request):
-    schedule = Schedule.objects.get(id=request.GET["id"])
-    schedule.default=True
-    schedule.save()
-    return default_presets_manager(request)
 
 def edit_preset_page(request):
     preset = Preset.objects.get(id=request.GET["id"])
@@ -68,6 +57,21 @@ def edit_preset_page(request):
     context = {'preset': preset, 'schedules':schedules}
     return render (request, 'elephants/edit_preset.html', context)
     #bring up the edit preset page
+
+#this is same as edit_preset_page but just takes an extra param, namely the presetid
+def edit_preset_page2(request, id):
+    preset = Preset.objects.get(id=id)
+    schedules = preset.schedule_set.all()
+    context = {'preset': preset, 'schedules':schedules}
+    return render (request, 'elephants/edit_preset.html', context)
+    #bring up the edit preset page
+
+
+def delete_preset_schedule(request):
+    schedule = Schedule.objects.get(id=request.GET["id"])
+    schedule.delete()
+    return edit_preset_page2(request, request.GET["presetid"])
+
 
 
 def index(request):

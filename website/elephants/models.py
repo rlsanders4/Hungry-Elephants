@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from adminops.models import Feeder
+
 
 # Elephant model
 class Elephant(models.Model):
@@ -37,9 +39,7 @@ class Schedule(models.Model):
     interval = models.DurationField()  # minimum waiting time before repeated feeds to elephant
     max_feeds = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])  # max number of times this schedule can allow feeding the elephant
     name = models.CharField(max_length=50, null=True)
-    # add feeder at some point
-    # delete the default field
-    default = models.BooleanField(default=False)
+    feeder = models.ForeignKey(Feeder, null=True, on_delete=models.CASCADE)
     presets = models.ManyToManyField(Preset)
 
     def __str__(self):

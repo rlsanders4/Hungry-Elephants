@@ -1,5 +1,6 @@
 from django.forms import ModelForm
 from .models import Schedule, Elephant
+from adminops.models import Feeder
 from django.db import models
 from django.contrib.admin.widgets import AdminDateWidget
 from django import forms
@@ -14,6 +15,7 @@ class ScheduleForm(forms.Form):
     end_time = forms.DateTimeField(initial=datetime.now()+timedelta(hours=8))
     interval = forms.DurationField()
     max_feeds = forms.IntegerField()
+    feeder = forms.ModelChoiceField(queryset=Feeder.objects.all())
     '''
     ['%Y-%m-%d %H:%M:%S',    # '2006-10-25 14:30:59'
      '%Y-%m-%d %H:%M',       # '2006-10-25 14:30'
@@ -25,8 +27,3 @@ class ScheduleForm(forms.Form):
      '%m/%d/%y %H:%M',       # '10/25/06 14:30'
      '%m/%d/%y']             # '10/25/06'
     '''
-
-class SelectPresetForm(forms.Form):
-    elephant = forms.ModelChoiceField(queryset=Elephant.objects.all())
-    schedule = forms.ModelChoiceField(queryset=Schedule.objects.filter(default=True))
-

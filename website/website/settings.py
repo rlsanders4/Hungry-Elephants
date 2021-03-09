@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'adminops.apps.AdminopsConfig',
-    'datalog',
+    'datalog.apps.DatalogConfig',
 ]
 
 MIDDLEWARE = [

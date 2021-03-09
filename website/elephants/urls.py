@@ -9,11 +9,10 @@ urlpatterns = [
     path('feeders', views.feeders, name='feeders'),
     path('scheduling', views.scheduling, name='scheduling'),
     path('presetscheduling', views.preset_scheduling, name='presetscheduling'),
-    path('preset-manager', views.default_presets_manager, name='preset_manager'),
-    path('markpreset', views.markpreset, name='markpreset'),
     path('custom', views.custom, name='custom'),
     path('presets', views.presets, name='presets'),
     path('schedule', views.schedule, name='schedule'),
-    path('editpreset', views.edit_preset_page, name='editpresetpage')
+    path('editpreset', views.edit_preset_page, name='editpresetpage'),
+    path('deletepresetschedule', views.delete_preset_schedule, name='deletepresetschedule')
 
 ]
