@@ -42,7 +42,7 @@ pinTODOFolderName = "/home/pi/rawdata/tasks_running"
 # ----------------------------------------------------------------
 # code:
 import time
-
+startTime = time.time()
 # Read lines from feeder status file, schedule TODO file, rfid status file and store them into caches (lists)
 feederStatus = []
 with open(feederStatusFileName) as f:
@@ -299,6 +299,6 @@ with open(scheduleTODOFileName,'w') as f:
     for fs in newScheduleTODO:
         f.write(','.join(fs)+"\n")
 
-
+# print("Controller took "+str((time.time() - startTime)*1000)+" ms to run!")
 # If reached the end of file, write the modified file cache to disk, terminate the controller and wait for next activation
 
