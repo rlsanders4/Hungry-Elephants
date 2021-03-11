@@ -7,7 +7,8 @@ from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect
 
 
-def scheduling(request):
+def schedule(request):
+    model = Schedule
     if request.method=='POST':
         form = ScheduleForm(request.POST)
         if form.is_valid():
@@ -93,7 +94,3 @@ def custom(request):
 def presets(request):
     context = {'name': 'Presets', }
     return render(request, 'elephants/presets.html', context)
-
-def schedule(request):
-    context = {'name': 'Schedule', }
-    return render(request, 'elephants/schedule.html', context)
