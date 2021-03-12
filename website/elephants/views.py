@@ -5,7 +5,8 @@ from .models import Schedule, Preset, Elephant
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect
-import datetime
+from datetime import datetime
+
 
 
 def schedule(request):
@@ -95,7 +96,16 @@ def create_active_preset_schedules(schedules):
         for s in schedules:
             new_start_time = (s.start_time.time().strftime('%H:%M:%S'))
             new_end_time = s.end_time.time().strftime('%H:%M:%S')
-            to
+            currentDate = datetime.today().strftime('%Y-%m-%d')
+            fullTime = currentDate+" "+new_start_time
+            new_startDT = datetime.strptime(fullTime, "%Y-%m-%d %H:%M:%S")
+            fullTime = currentDate+" "+new_end_time
+            new_endDT = datetime.strptime(fullTime,"%Y-%m-%d %H:%M:%S")
+            s.start_time = new_startDT
+            s.end_time = new_endDT
+            s.save()
+
+    print("preset schdules are updated!")
 
 
 def index(request):
