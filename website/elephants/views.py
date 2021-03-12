@@ -5,6 +5,7 @@ from .models import Schedule, Preset, Elephant
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect
+import datetime
 
 
 def schedule(request):
@@ -44,8 +45,8 @@ def preset_scheduling(request):
             sched.end_time = form.cleaned_data['end_time']
             sched.interval = form.cleaned_data['interval']
             sched.max_feeds = form.cleaned_data['max_feeds']
+            sched.active = False
             print("preset scheduling about to save")
-            print(request.GET["id"])
             sched.save()
             sched.presets.add(Preset.objects.filter(pk=request.GET["id"])[0])
             sched.save()
@@ -80,11 +81,25 @@ def delete_preset_schedule(request):
     schedule.delete()
     return edit_preset_page2(request, request.GET["presetid"])
 
+def execute_preset(request):
+    preset = Preset.objects.get(id=request.GET['id'])
+    schedules = preset.schedule_set.all()
+    create_active_preset_schedules(schedules)
+    return index(request)
+
+
+'''this method should take schedules (from a preset) and update the date to
+the current date and mark all of them as active'''
+def create_active_preset_schedules(schedules):
+    if(schedules):
+        for s in schedules:
+            new_start_time = (s.start_time.time().strftime('%H:%M:%S'))
+            new_end_time = s.end_time.time().strftime('%H:%M:%S')
+            to
 
 
 def index(request):
     elephants = Elephant.objects.all()
-    print(type(elephants))
     elephants1 = elephants[:3]
     elephants2 = elephants[3:]
     context = {'name': 'Hungry Elephants', 'elephants1': elephants1, 'elephants2':elephants2}

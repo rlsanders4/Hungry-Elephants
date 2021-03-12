@@ -12,5 +12,6 @@ urlpatterns = [
     path('presets', views.presets, name='presets'),
     path('schedule/', views.schedule, name='schedule'),
     path('editpreset', views.edit_preset_page, name='editpresetpage'),
-    path('deletepresetschedule', views.delete_preset_schedule, name='deletepresetschedule')
+    path('deletepresetschedule', views.delete_preset_schedule, name='deletepresetschedule'),
+    path('launchpreset', views.execute_preset, name='executepreset'),
 ]
