@@ -18,9 +18,16 @@ def schedule(request):
             sched.end_time = form.cleaned_data['end_time']
             sched.interval = form.cleaned_data['interval']
             sched.max_feeds = form.cleaned_data['max_feeds']
+            sched.feeder = form.cleaned_data['feeder']
             sched.save()
             print("saved schedule")
-            return HttpResponseRedirect(reverse('elephants:index'))
+            print(type(form.cleaned_data['elephant']))
+            print(type(form.cleaned_data['start_time']))
+            print(type(form.cleaned_data['end_time']))
+            print(type(form.cleaned_data['interval']))
+            print(type(form.cleaned_data['max_feeds']))
+            print(type(form.cleaned_data['feeder']))
+            return HttpResponseRedirect(reverse('elephants:scheduling'))
     else:
         form = ScheduleForm()
 
