@@ -41,6 +41,7 @@ class Schedule(models.Model):
     name = models.CharField(max_length=50, null=True)
     feeder = models.ForeignKey(Feeder, null=True, on_delete=models.CASCADE)
     presets = models.ManyToManyField(Preset)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         if(self.name):

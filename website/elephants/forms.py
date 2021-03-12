@@ -16,6 +16,10 @@ class ScheduleForm(forms.Form):
     interval = forms.DurationField()
     max_feeds = forms.IntegerField()
     feeder = forms.ModelChoiceField(queryset=Feeder.objects.all())
+
+
+
+
     '''
     ['%Y-%m-%d %H:%M:%S',    # '2006-10-25 14:30:59'
      '%Y-%m-%d %H:%M',       # '2006-10-25 14:30'
