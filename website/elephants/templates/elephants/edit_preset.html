@@ -5,17 +5,39 @@
 </head>
 {% include "elephants/navbar.html" %}
 <body>
-    <h1>{{ preset.name }}</h1>
 
-    <div>
-        <button>
-            <a href="/elephants/presetscheduling?id={{ preset.id }}">Add New Schedule</a>
-        </button>
+    <br>
+    <div class=container>
+        <div class="jumbotron">
+          <h1 class="text-center">{{ preset.name }}</h1>
+        </div>
     </div>
-    {% for schedule in schedules %}
-        {% include "elephants/schedule_viewer_module.html" with schedule=schedule presetid=preset.id %}
 
-    {%endfor %}
+    <div class="container">
+        <div>
+            <a href="/elephants/presetscheduling?id={{ preset.id }}" class="btn btn-primary">Add New Schedule</a>
+        </div>
+        <br>
+        <table class="table">
+            <thread >
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Elephant</th>
+                    <th scope="col">Start Time</th>
+                    <th scope="col">End Time</th>
+                    <th scope="col">Interval</th>
+                    <th scope="col">Max Feeds</th>
+                    <th scope="col">Feeder</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thread>
+            <tbody>
+                {% for schedule in schedules %}
+                    {% include "elephants/schedule_viewer_module.html" with schedule=schedule presetid=preset.id %}
+                {%endfor %}
+            </tbody>
+        </table>
+    </div>
 
 </body>
 </html>
