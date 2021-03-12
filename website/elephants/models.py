@@ -39,7 +39,7 @@ class Schedule(models.Model):
     interval = models.DurationField()  # minimum waiting time before repeated feeds to elephant
     max_feeds = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])  # max number of times this schedule can allow feeding the elephant
     name = models.CharField(max_length=50, null=True)
-    feeder = models.ForeignKey(Feeder, null=True, on_delete=models.CASCADE)
+    feeder = models.ForeignKey(Feeder, on_delete=models.CASCADE)
     presets = models.ManyToManyField(Preset)
 
     def __str__(self):
