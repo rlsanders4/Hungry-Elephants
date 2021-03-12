@@ -5,6 +5,8 @@ from .models import Schedule, Preset, Elephant
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect
+from datetime import datetime
+
 
 
 def schedule(request):
@@ -18,9 +20,16 @@ def schedule(request):
             sched.end_time = form.cleaned_data['end_time']
             sched.interval = form.cleaned_data['interval']
             sched.max_feeds = form.cleaned_data['max_feeds']
+            sched.feeder = form.cleaned_data['feeder']
             sched.save()
             print("saved schedule")
-            return HttpResponseRedirect(reverse('elephants:index'))
+            print(type(form.cleaned_data['elephant']))
+            print(type(form.cleaned_data['start_time']))
+            print(type(form.cleaned_data['end_time']))
+            print(type(form.cleaned_data['interval']))
+            print(type(form.cleaned_data['max_feeds']))
+            print(type(form.cleaned_data['feeder']))
+            return HttpResponseRedirect(reverse('elephants:scheduling'))
     else:
         form = ScheduleForm()
 
@@ -37,8 +46,8 @@ def preset_scheduling(request):
             sched.end_time = form.cleaned_data['end_time']
             sched.interval = form.cleaned_data['interval']
             sched.max_feeds = form.cleaned_data['max_feeds']
+            sched.active = False
             print("preset scheduling about to save")
-            print(request.GET["id"])
             sched.save()
             sched.presets.add(Preset.objects.filter(pk=request.GET["id"])[0])
             sched.save()
@@ -73,11 +82,34 @@ def delete_preset_schedule(request):
     schedule.delete()
     return edit_preset_page2(request, request.GET["presetid"])
 
+def execute_preset(request):
+    preset = Preset.objects.get(id=request.GET['id'])
+    schedules = preset.schedule_set.all()
+    create_active_preset_schedules(schedules)
+    return index(request)
+
+
+'''this method should take schedules (from a preset) and update the date to
+the current date and mark all of them as active'''
+def create_active_preset_schedules(schedules):
+    if(schedules):
+        for s in schedules:
+            new_start_time = (s.start_time.time().strftime('%H:%M:%S'))
+            new_end_time = s.end_time.time().strftime('%H:%M:%S')
+            currentDate = datetime.today().strftime('%Y-%m-%d')
+            fullTime = currentDate+" "+new_start_time
+            new_startDT = datetime.strptime(fullTime, "%Y-%m-%d %H:%M:%S")
+            fullTime = currentDate+" "+new_end_time
+            new_endDT = datetime.strptime(fullTime,"%Y-%m-%d %H:%M:%S")
+            s.start_time = new_startDT
+            s.end_time = new_endDT
+            s.save()
+
+    print("preset schdules are updated!")
 
 
 def index(request):
     elephants = Elephant.objects.all()
-    print(type(elephants))
     elephants1 = elephants[:3]
     elephants2 = elephants[3:]
     context = {'name': 'Hungry Elephants', 'elephants1': elephants1, 'elephants2':elephants2}
