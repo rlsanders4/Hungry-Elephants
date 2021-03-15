@@ -100,9 +100,10 @@ def create_active_preset_schedules(schedules):
             fullTime = currentDate+" "+new_start_time
             new_startDT = datetime.strptime(fullTime, "%Y-%m-%d %H:%M:%S")
             fullTime = currentDate+" "+new_end_time
-            new_endDT = datetime.strptime(fullTime,"%Y-%m-%d %H:%M:%S")
+            new_endDT = datetime.strptime(fullTime, "%Y-%m-%d %H:%M:%S")
             s.start_time = new_startDT
             s.end_time = new_endDT
+            s.active = True
             s.save()
 
     print("preset schdules are updated!")
