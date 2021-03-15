@@ -1,0 +1,14 @@
+<div>
+        <tr>
+            <th scope="row">{{ schedule.id }}</th>
+            <td>{{ schedule.elephant }}</td>
+            <td>{{ schedule.start_time|date:"P" }}</td>
+            <td>{{ schedule.end_time|date:"P" }}</td>
+            <td>{{ schedule.interval }}</td>
+            <td>{{ schedule.max_feeds }}</td>
+            <td>{{ schedule.feeder }}</td>
+            <td>
+                <a href="/elephants/deletepresetschedule?id={{ schedule.id }}&presetid={{presetid}}" class="btn btn-link">Delete</a>
+            </td>
+        </tr>
+</div>

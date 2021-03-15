@@ -33,7 +33,7 @@
             </thread>
             <tbody>
                 {% for schedule in schedules %}
-                    {% include "elephants/schedule_viewer_module.html" with schedule=schedule presetid=preset.id %}
+                    {% include "elephants/preset_schedule_viewer_module.html" with schedule=schedule presetid=preset.id %}
                 {%endfor %}
             </tbody>
         </table>

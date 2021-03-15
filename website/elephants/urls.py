@@ -14,4 +14,7 @@ urlpatterns = [
     path('editpreset', views.edit_preset_page, name='editpresetpage'),
     path('deletepresetschedule', views.delete_preset_schedule, name='deletepresetschedule'),
     path('launchpreset', views.execute_preset, name='executepreset'),
+    path('activeschedules', views.active_schedules, name='activeschedules'),
+    path('deleteschedulefromactive', views.delete_schedule_activeschedulepage, name="deleteschedulefromactive"),
+    path('markinactivefromactive', views.mark_inactive_from_active, name="markinactivefromactive"),
 ]
