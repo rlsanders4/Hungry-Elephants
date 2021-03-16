@@ -14,6 +14,8 @@ class Pi(models.Model):
     # ASK FOR SITE CODE
     site_code = models.CharField(max_length=10, default="AAA") #site code associated with reader box and antennas
 
+    def __str__(self):
+        return self.name + " " + str(self.id)
 # Feeder Model
 class Feeder(models.Model):
     name = models.CharField(max_length=50, default="Feeder") #name seen by users
@@ -28,3 +30,6 @@ class Antenna(models.Model):
     name = models.CharField(max_length=50, default="Antenna") #name seen by users
     tag = models.CharField(max_length=10) #antenna tag
     connected_to = models.ForeignKey(Pi, on_delete=models.CASCADE) #pi connection
+
+    def __str__(self):
+        return self.name
