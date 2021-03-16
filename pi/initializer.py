@@ -5,6 +5,9 @@ from configparser import ConfigParser
 from netifaces import interfaces, ifaddresses, AF_INET
 import time
 import datetime
+import filecmp 
+
+
 
 feederStatusFileName = "/home/pi/shared_data/feeder.status"
 pinTODOFolderName = "/home/pi/rawdata/tasks_running"
@@ -16,13 +19,19 @@ endDelay = 0.5
 restartHour = 4
 
 demomode = False
+noLogger = False
 
+if os.popen("pgrep -a python | grep 'initializer.py'").read().count('\n') > 1:
+    # This means there are already an instence running.
+    sys.exit("\nOnly one instence can be executed at the same time!\n")
 
 if len(sys.argv) > 1:
     # Some arguments had been passed in. We conly interest in the first one.
     if sys.argv[1] == '-d' or sys.argv[1] == '--demo':
         demomode =True
         print('Demoing!')
+    elif sys.argv[1] == '-nl' or sys.argv[1] == '--no_logger':
+        noLogger = True
     else:
         print('Usage: python3 initializer.py -d to test demo run')
         print('Usage: sudo python3 initializer.py for setting up this service and commiting system autonomy ')
@@ -46,7 +55,22 @@ if not os.geteuid() == 0 and not demomode:
 if not os.system("systemctl is-active --quiet initializer") == 0 and not demomode:
     # service not running, creating one
     os.system("systemctl status initializer > /home/pi/rawdata/logs/initializer_error_log_"+datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S')+".log")
-    os.system("cp '/home/pi/initializer.service' '/etc/systemd/system/initializer.service'")
+    
+    # os.system("cp '/home/pi/initializer.service' '/etc/systemd/system/initializer.service'")
+    with open('/etc/systemd/system/initializer.service','w') as f:
+        f.write('[Unit]\n')
+        f.write('Description=service for initilizer\n')
+        f.write('[Service]\n')
+        # do not restart and stuff, leave the error log there
+        f.write('Type=simple\n')
+        f.write('Restart=always\n')
+        f.write('RestartSec=1\n')
+        if noLogger:
+            f.write('ExecStart=python3 /home/pi/initializer.py -nl> /home/pi/rawdata/logs/initializer_output/Current_Instance.log\n')
+        else:
+            f.write('ExecStart=python3 /home/pi/initializer.py > /home/pi/rawdata/logs/initializer_output/Current_Instance.log\n')
+        f.write('[Install]\n')
+        f.write('WantedBy=multi-user.target\n')
     os.system("systemctl daemon-reload")
     os.system("systemctl start initializer && systemctl enable initializer")
     exit()
@@ -55,6 +79,11 @@ now = datetime.datetime.now()
 startTime = time.time()
 print ('Started house keeping! Now is '+ now.strftime('%Y-%m-%d %H:%M:%S'))
 #adapterName = '/dev/ttyUSB0'
+
+
+    
+if demomode or noLogger:
+    os.system('python3 /home/pi/serialLogger.py -d')
 
 def ip4_addresses():
     ip_list = []
@@ -84,29 +113,35 @@ def deepRename(oldFileName,newFileName,correctPin):
     pinStatus[2] = str(correctPin)
     with open(newFileName,'w') as f:
         f.write(','.join(pinStatus)+"\n")
+        
+# Zero out config cache for new setup
+os.system("cp /dev/null '/home/pi/rawdata/current_config.ini'")
     
 counter = 0
 while True:
     
     # ----------------------------------------------------
     # set up the system according to config file
-    
+
     config_object = ConfigParser()
     config_object.read("/home/pi/shared_data/config.ini")
+    current_config = ConfigParser()
+    current_config.read("/home/pi/rawdata/current_config.ini")
+    
     activePins = []
     for site in config_object.sections():
         # get pins first
         newFeeder = {}
         feederNum = int(config_object.get(site,'FEEDER_NUMBER'))
         options = config_object.options(site)
-        counter = 0;
+        ct = 0;
         for pin in options:
-            if pin.startswith('f') and pin.endswith('_pin') and (counter < feederNum or feederNum == 0):
-                feederName = pin.strip('f').strip('_pin')
-                pinNum = config_object.get(site,'F'+feederName+'_PIN')
+            if pin.startswith('f') and pin.endswith('_pin') and (ct < feederNum or feederNum == 0):
+                feederName = pin.rpartition("_pin")[0].upper()
+                pinNum = config_object.get(site,pin)
                 if (not pinNum in activePins) and (-1 < int(pinNum) <28):
-                    newFeeder['F'+feederName] = config_object.get(site,'F'+feederName+'_PIN')
-                    counter = counter +1
+                    newFeeder[feederName] = config_object.get(site,pin)
+                    ct = ct +1
                     activePins.append(pinNum)
         
         
@@ -116,7 +151,7 @@ while True:
             # not for this machine, skipping
             continue
         siteName = site['SITE_CODE']+"_serialLogger"
-        if not os.system("systemctl is-active --quiet "+siteName) == 0 and not demomode:
+        if not demomode and not noLogger and not os.system("systemctl is-active --quiet "+siteName) == 0:
             # The logger for this site is not already running.
             # Need to reconfigure and start the serial looger service
             # Log the error entry, if any
@@ -125,8 +160,7 @@ while True:
             os.system("systemctl daemon-reload")
             os.system("systemctl start "+siteName+" && systemctl enable "+siteName)
         
-        if demomode:
-            os.system('python3 /home/pi/serialLogger.py -d')
+        
             
             
             
@@ -241,7 +275,30 @@ while True:
         with open(feederStatusFileName,'w') as f:
             for fs in newFeederStatus:
                 f.write(fs+"\n")
-                            
+    
+    
+    # Now delete the sections that was removed from the current config
+    for section in current_config.sections():
+        if section not in config_object.sections():
+            # Disabling the logger service
+            siteName = current_config[section]['SITE_CODE']+"_serialLogger"
+            os.system("systemctl stop "+siteName+" && systemctl disable "+siteName)
+            os.system('sudo rm /etc/systemd/system/'+siteName+'.service')
+            
+            # Remove PIN files
+            options = current_config.options(section)
+            for pin in options:
+                if pin.startswith('f') and pin.endswith('_pin') :
+                    pinNum = current_config.get(section,pin)
+                    if not pinNum in activePins:
+                        os.system('rm ' +pinTODOFolderName + '/PIN' + pinNum+'.todo')
+                        
+    
+    # Only copy the config file if it is changed 
+    if not filecmp.cmp("/home/pi/shared_data/config.ini", "/home/pi/rawdata/current_config.ini")  :
+        #  As config is changed, copy the config to current config
+        os.system("cp '/home/pi/shared_data/config.ini' '/home/pi/rawdata/current_config.ini'")
+        
     #----------------------------------------------------------
     # Done with the config
     # running task
@@ -253,6 +310,8 @@ while True:
     else:
         os.system('python3 /home/pi/controller.py')
         os.system('python3 /home/pi/ACTIVATOR.py')
+        
+        
     if counter == 0:
         print ('As '+ datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')+' , execution success!')
         print ('Expect next report in around 10 min')
@@ -262,12 +321,17 @@ while True:
         if counter == 600:
             counter = 0
     
+    
+    
     # restarting itself everyday or if it had been two days since last 24 hour
     if time.time() - startTime > 7200 and datetime.datetime.now().hour == restartHour or time.time() - startTime > 172800:
         os.system("journalctl -u initializer.service -p 0..7 --since=-24h10min -x> /home/pi/rawdata/logs/normal_logs/initializer_log_"+datetime.datetime.now().strftime('%Y-%m-%d_%H:%M')+".log")
         os.system('systemctl restart initializer')
         exit()
+    
         
     if demomode:
         print('Demo complete! exiting!')
         exit()
+        
+        
