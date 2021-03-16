@@ -3,7 +3,6 @@
 # Gets formatted schedules from the schedule builder and distributes them to each raspberry pi.
 #
 
-from schedules.schedule_builder import ScheduleBuilder
 from adminops.models import Pi
 
 class Distributor():
@@ -18,6 +17,7 @@ class Distributor():
 
     def link_schedule_builder(this, builder):
         this.schedule_builder = builder
+        from schedules.schedule_builder import ScheduleBuilder
         assert(this.schedule_builder is ScheduleBuilder), "no schedule builder found"
 
     def distribute(this):
