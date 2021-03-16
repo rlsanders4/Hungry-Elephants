@@ -1,4 +1,4 @@
-from django.test import TestCase
+from unittest import TestCase
 from datalog.models import FeedingData
 import pytest
 # Create your tests here.

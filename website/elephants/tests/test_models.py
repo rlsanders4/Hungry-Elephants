@@ -1,4 +1,4 @@
-from django.test import TestCase
+from unittest import TestCase
 from elephants.models import Elephant
 from elephants.models import Preset
 from elephants.models import Schedule

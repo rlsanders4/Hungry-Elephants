@@ -20,6 +20,9 @@ class Feeder(models.Model):
     tag = models.CharField(max_length=10) #feeder tag
     connected_to = models.ForeignKey(Pi, on_delete=models.CASCADE) #pi connection
 
+    def __str__(self):
+        return self.name;
+
 # Antenna Model
 class Antenna(models.Model):
     name = models.CharField(max_length=50, default="Antenna") #name seen by users
