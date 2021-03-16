@@ -38,7 +38,7 @@ def preset_scheduling(request):
     if request.method=='POST':
         form = PresetForm(request.POST)
         if form.is_valid():
-            sched = PresetSchedule()
+            sched = Schedule()
             sched.elephant = form.cleaned_data['elephant']
             sched.start_time = form.cleaned_data['start_time']
             sched.end_time = form.cleaned_data['end_time']
