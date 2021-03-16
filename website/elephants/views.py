@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from .forms import ScheduleForm, PresetForm
-from .models import Schedule, Preset, Elephant
+from .models import Schedule, Preset, Elephant, PresetSchedule
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -38,12 +38,13 @@ def preset_scheduling(request):
     if request.method=='POST':
         form = PresetForm(request.POST)
         if form.is_valid():
-            sched = Schedule()
+            sched = PresetSchedule()
             sched.elephant = form.cleaned_data['elephant']
             sched.start_time = form.cleaned_data['start_time']
             sched.end_time = form.cleaned_data['end_time']
             sched.interval = form.cleaned_data['interval']
             sched.max_feeds = form.cleaned_data['max_feeds']
+            sched.feeder = form.cleaned_data['feeder']
             sched.active = False
             print("preset scheduling about to save")
             sched.save()
