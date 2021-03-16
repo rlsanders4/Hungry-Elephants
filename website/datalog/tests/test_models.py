@@ -1,6 +1,8 @@
 from django.test import TestCase
 from datalog.models import FeedingData
+import pytest
 # Create your tests here.
+@pytest.mark.django_db(transaction=True)
 class DatalogModelTest(TestCase):
 
 

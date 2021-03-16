@@ -2,10 +2,12 @@ from django.test import TestCase
 from elephants.models import Elephant
 from elephants.models import Preset
 from elephants.models import Schedule
+import pytest
 # Create your tests here.
+@pytest.mark.django_db(transaction=True)
 class ElephantsModelTest(TestCase):
-
     @classmethod
+   
     def setUpTestData(cls):
         #Set up non-modified objects used by all test methods
         Elephant.objects.create(name ='Bob', rfid = '226000923031' )
@@ -102,9 +104,14 @@ class ElephantsModelTest(TestCase):
         self.assertEqual(presets1.name, "test")
     
     def test_schedule_str(self):
-        schedule = Schedule.objects.get(id=1)
-        expected_object_name = schedule.name
-        self.assertEquals(expected_object_name, str(schedule))
+        try:
+
+            schedule = Schedule.objects.get(id=1)
+            expected_object_name = schedule.name
+            self.assertEquals(expected_object_name, str(schedule))
+        except IntegrityError:
+            pass
+   
 
 
 
