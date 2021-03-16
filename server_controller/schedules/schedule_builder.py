@@ -4,6 +4,7 @@
 #
 
 import time
+import uuid
 from elephants.models import Schedule
 
 class ScheduleBuilder():
@@ -21,27 +22,23 @@ class ScheduleBuilder():
         # list of strings representing each schedule
         this.schedules = list()
 
-    # start automatically getting schedules on a set interval
-    def start(this):
+    # get schedules and distribute if necessary
+    def run(this):
         this.getSchedules()
         time.sleep(1)
-        this.getSchedules()
-        print(this.schedules)
     
-    def stop(this):
-        return 0
-
     def getSchedules(this):
         scheduleList = list(Schedule.objects.all())
-        if(scheduleList == this.schedules):
-            print("they're already the same")
-        else:
-            print("getting schedules...")
-        
-        this.schedules = scheduleList
+        if(scheduleList != this.schedules):
+            this.schedules = scheduleList
+            this.distributor.distribute(this.formatSchedules(this.schedules))
 
-
-
-    #optional callback for a schedule update
-    def onScheduleUpdated(this):
-        return 0
+    def formatSchedules(this, scheduleList):
+        result = ""
+        for schedule in scheduleList:
+            startTime = str(int(schedule.start_time.timestamp()))
+            interval = str(schedule.interval.seconds)
+            endTime = str(int(schedule.end_time.timestamp()))
+            line = str(uuid.uuid1()) + "," + startTime + "," + "AAA,F1,1,A1," + str(schedule.elephant.rfid) + "," + interval + "," + endTime + "," + str(schedule.max_feeds)
+            result += line + '\n'
+        return result
