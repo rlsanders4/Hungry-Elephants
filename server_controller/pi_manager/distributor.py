@@ -8,7 +8,9 @@ from adminops.models import Pi
 
 class Distributor():
     # pis = List of Pi objects
-    def __init__(this, pis):
+    # interval = interval in s for schedule updating/distributing
+    def __init__(this, interval, pis):
+        this.interval = interval
         this.pis = pis
         for pi in this.pis:
             if pi.connected == False:
@@ -17,3 +19,7 @@ class Distributor():
     def link_schedule_builder(this, builder):
         this.schedule_builder = builder
         assert(this.schedule_builder is ScheduleBuilder), "no schedule builder found"
+
+    def distribute(this):
+        #TODO: create separate thread each time schedules are sent out
+        return 0
