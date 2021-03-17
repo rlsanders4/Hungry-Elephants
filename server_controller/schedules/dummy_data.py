@@ -40,6 +40,12 @@ def createDummyData():
     print(s2.name)
     print(s3.name)
 
+def createDummyElephant():
+    e = Elephant()
+    e.name = "SERVERCONTROLLER_TEST_ELEPHANT"
+    e.rfid = "1234567890"
+    e.save()
+
 def clearDummyData():
     els = Elephant.objects.filter(name="SERVERCONTROLLER_TEST_ELEPHANT")
     for e in els:

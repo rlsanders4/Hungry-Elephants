@@ -17,6 +17,8 @@ class Connector():
             this.pis = list(Pi.objects.all())
             for pi in this.pis:
                 pi.connected = this.verify_connection(pi)
+                if(pi.connected):
+                        print("Pi " + pi.name + " connected")
                 pi.save()
         else:
             oldpis = this.pis
@@ -25,19 +27,24 @@ class Connector():
             if this.pis != oldpis:
                 for pi in this.pis:
                     pi.connected = this.verify_connection(pi)
+                    if(pi.connected):
+                        print("Pi " + pi.name + " connected")
                     pi.save()
 
     def get_pis(this):
         assert(len(this.pis) > 0), "No pi connections found"
         return this.pis
 
+    def update_connection_status(this):
+        for pi in this.pis:
+            pi.connected = this.verify_connection(pi)
+            pi.save()
+
     def verify_connection(this, pi):
-        pi.ftp = None
         try:
-            pi.ftp = FTP(str(pi.ip))
-            pi.ftp.login("ftpuser", "password")
-            pi.ftp.close()
-            print("Pi " + pi.name + " connection established")
+            ftp = FTP(str(pi.ip))
+            ftp.login("ftpuser", "password")
+            ftp.close()
             return True
         except Exception:
             print("Pi " + pi.name + " unable to connect")

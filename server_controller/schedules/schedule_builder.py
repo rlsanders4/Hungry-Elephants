@@ -10,8 +10,7 @@ from elephants.models import Schedule
 class ScheduleBuilder():
     # interval: time interval in s between schedule pulls
     # distributor: distributor object
-    def __init__(this, interval, distributor):
-        this.interval = interval
+    def __init__(this, distributor):
         this.distributor = distributor
         from pi_manager.distributor import Distributor
         if this.distributor is Distributor:
@@ -25,7 +24,6 @@ class ScheduleBuilder():
     # get schedules and distribute if necessary
     def run(this):
         this.getSchedules()
-        time.sleep(1)
     
     def getSchedules(this):
         scheduleList = list(Schedule.objects.all())
