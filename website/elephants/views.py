@@ -23,7 +23,7 @@ def schedule(request):
             print("saved schedule")
             return HttpResponseRedirect(reverse('elephants:schedule'))
     else:
-        form = ScheduleForm()
+        form = ScheduleForm(initial={'start_time':'2021-03-18 17:30', 'end_time': '2021-03-18 18:00'})
 
     print("in normal scheduling module")
     return render(request, 'elephants/schedule_module.html', {'form':form})
