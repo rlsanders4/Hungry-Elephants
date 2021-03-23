@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import datetime
-from .views import *
+from .view import index
 
 '''this method should take schedules (from a preset) and update the date to
 the current date and mark all of them as active'''

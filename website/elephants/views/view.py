@@ -6,12 +6,18 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import datetime
+from .logic import elephantModuleData
+
+
 
 def index(request):
     elephants = Elephant.objects.all()
-    elephants1 = elephants[:3]
-    elephants2 = elephants[3:]
-    context = {'name': 'Hungry Elephants', 'elephants1': elephants1, 'elephants2':elephants2}
+    elephantInfo = dict()
+    for ele in elephants:
+        elephantInfo[ele] = elephantModuleData(ele)
+
+
+    context = {'name': 'Hungry Elephants', 'elephantInfo': elephantInfo.items()}
     return render(request, 'elephants/index.html', context)
 
 def feeders(request):

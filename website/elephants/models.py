@@ -7,7 +7,7 @@ from adminops.models import Feeder
 # Elephant model
 class Elephant(models.Model):
     name = models.CharField(max_length=40)
-    rfid = models.CharField(max_length=12)
+    rfid = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
