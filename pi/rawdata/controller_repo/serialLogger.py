@@ -2,19 +2,37 @@
 import serial
 import time
 import csv
+import datetime
+import sys
 
-# TODO: fix serial logger
 
-demomode = True
+# Default values
+demomode = False
+serialPort = '/dev/ttyUSB0'
 
-ser = serial.Serial(
-port='/dev/ttyUSB0',
-baudrate = 19200,
-parity=serial.PARITY_ODD,
-stopbits=serial.STOPBITS_ONE,
-bytesize=serial.SEVENBITS,
-timeout=1
-)
+if len(sys.argv) > 1:
+    # Some arguments had been passed in. We conly interest in the first one.
+    if sys.argv[1] == '-d' or sys.argv[1] == '--demo':
+        demomode =True
+        print('Demoing!')
+    elif sys.argv[1][0] == '/' :
+        serialPort = sys.argv[1]
+    else:
+        print('Usage: python serialLogger.py /dev/ttyUSB0')
+        print('First argument should be the serial port the pi should listen on!')
+        print('Default: continuously listen to serial port defined for elephant arrival and departure information')
+        print('-d  --demo  enable demo mode')
+        print('-h  --help  display this message')
+
+if not demomode:
+    ser = serial.Serial(
+    port='/dev/ttyUSB0',
+    baudrate = 19200,
+    parity=serial.PARITY_ODD,
+    stopbits=serial.STOPBITS_ONE,
+    bytesize=serial.SEVENBITS,
+    timeout=1
+    )
 #ser.flushInput()
 
 logfilename = '/home/pi/rawdata/serialdata.csv'
@@ -22,12 +40,7 @@ statusfilename = '/home/pi/rawdata/rfidstatus.txt'
 serverlogfilename = '/home/pi/shared_data/logdata.csv'
 demofilename = '/home/pi/rawdata/exampledata.csv'
 
-try:
-    ser.write("DMIF".encode())
-    print("Command sent")
-except:
-    print("ERROR sending DMIF to serial")
-    exit()
+
 
 if demomode:
     with open(demofilename, "r") as f:
@@ -36,6 +49,13 @@ if demomode:
     linecounter = 0
     print('Operating in demo mode!')
     print('Total lines: ',totalLines)
+else:
+    try:
+        ser.write("DMIF".encode())
+        print("Command sent")
+    except:
+        print("ERROR sending DMIF to serial")
+        exit()
 
 while True:
     try:
@@ -47,22 +67,33 @@ while True:
                 break
         else:
             ser_bytes = ser.readline()
+            #ser_bytes = ser.readline().decode("ascii")
             
         print(ser_bytes)
-        #ser_bytes = ser.readline().decode("ascii")
-        data = ser_bytes.split(",")
-        data.insert(0,str(int(time.time())))
-        data[18]=str(0)
-        # TODO: refine leaving detection mechenism with the data scheme.
-        leaving = (len(data) >19)
+        
+        data = ser_bytes.strip().split(",")
+        data[0] = str(int(time.time()))
+        if not len(data) == 19:
+            print('ERROR! Input data have a wrong length! expecting 19, got '+str(len(data)))
+            print('Input data: '+ser_bytes)
+            continue
+        
+        try:
+            x = time.strptime(data[4].split('.')[0],'%H:%M:%S')
+            elapsedSec = int(datetime.timedelta(hours=x.tm_hour,minutes=x.tm_min,seconds=x.tm_sec).total_seconds())
+        except:
+            print("ERROR! Input data have an illegal time elapsed field!")
+            continue
+        leaving = not elapsedSec == 0
+        
         if leaving:
             print("Leaving!")
         
 
         # Writing to local log
         with open(logfilename,"a") as f:
-            writer = csv.writer(f,delimiter=",")
-            writer.writerow(data)
+            # note: this data uses the antenna time while the rest of the logs uses local time on pi
+            f.write(ser_bytes)
             
         # Modifing the status file
         if leaving:

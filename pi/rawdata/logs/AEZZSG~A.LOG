@@ -1,0 +1,15 @@
+● AAA_serialLogger.service - Service for AAA_serialLogger
+   Loaded: loaded (/etc/systemd/system/AAA_serialLogger.service; enabled; vendor preset: enabled)
+   Active: failed (Result: exit-code) since Wed 2021-03-10 18:53:45 EST; 2s ago
+ Main PID: 32348 (code=exited, status=1/FAILURE)
+
+Mar 10 18:53:44 raspberrypi python3[32348]: Traceback (most recent call last):
+Mar 10 18:53:44 raspberrypi python3[32348]:   File "/home/pi/serialLogger.py", line 34, in <module>
+Mar 10 18:53:44 raspberrypi python3[32348]:     timeout=1
+Mar 10 18:53:44 raspberrypi python3[32348]:   File "/usr/lib/python3/dist-packages/serial/serialutil.py", line 240, in __init__
+Mar 10 18:53:44 raspberrypi python3[32348]:     self.open()
+Mar 10 18:53:44 raspberrypi python3[32348]:   File "/usr/lib/python3/dist-packages/serial/serialposix.py", line 268, in open
+Mar 10 18:53:44 raspberrypi python3[32348]:     raise SerialException(msg.errno, "could not open port {}: {}".format(self._port, msg))
+Mar 10 18:53:44 raspberrypi python3[32348]: serial.serialutil.SerialException: [Errno 2] could not open port /dev/ttyUSB0: [Errno 2] No such file or directory: '/dev/ttyUSB0'
+Mar 10 18:53:45 raspberrypi systemd[1]: AAA_serialLogger.service: Main process exited, code=exited, status=1/FAILURE
+Mar 10 18:53:45 raspberrypi systemd[1]: AAA_serialLogger.service: Failed with result 'exit-code'.

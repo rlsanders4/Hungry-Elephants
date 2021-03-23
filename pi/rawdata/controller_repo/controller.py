@@ -2,11 +2,13 @@
 # This file aim at the purpose of reading from the TODO file, read from the rfid status, read from the feeder status,PIN status, then determine what to do.
 # It's action will be described as below:
 
-# Read lines from feeder status file, schedule TODO file, rfid status file and store them into caches (lists)
+# Read lines from feeder status file, schedule TODO file, rfid status file, schedule TODO Templet File and store them into caches (lists)
 feederStatusFileName = "/home/pi/shared_data/feeder.status"
 scheduleTODOFileName = "/home/pi/shared_data/schedule.todo"
 rfidStatusFileName = "/home/pi/rawdata/rfidstatus.txt"
 pinTODOFolderName = "/home/pi/rawdata/tasks_running"
+scheduleTODOTempletFileName = "/home/pi/shared_data/schedule.todo.templet"
+completedTODOFileName = "/home/pi/shared_data/completed.todo"
 
 # Go through the feeder status cache. For each line:
 # If the line indicate the task is COMPLETED, reset the status to WAITING, store the task ID in completed tasks
@@ -15,15 +17,22 @@ pinTODOFolderName = "/home/pi/rawdata/tasks_running"
      # If the task is still there: do nothing.
 # If the line indicate the pin in WAITING, do nothing.
 
+# Read content of schedule TODO Templet File, store all the unique UUIDs and tasks in it.
+
 # Go through each line of the schedule TODO cache,
-# 1. If a task have pasts its EXPIRE_TIME, then delete the task from file
+# 0. If a task was removed from schedule TODO Templet File, remove it as well (need to flush pin todo and status file) (record it to completed task for good practice)
+# 0.5. If a task is present, remove it from schedule TODO Templet cache
+# 1. If a task have pasts its EXPIRE_TIME, then delete the task from file, record task to completed task
 # 2. If a task have an ID that was indicated completed, reduce one count from its REPEAT_X_TIMES
-# 3. If a task have a REPEAT_X_TIMES smaller than 1, then delete the task from file cache
+# 3. If a task have a REPEAT_X_TIMES smaller than 1, then delete the task from file cache, record task to completed task
 # Then:
 # 1. If a task did not met its activation requirement, skip the task
 # 2. If a task met its activation requirement, execute the task.
 
-# If reached the end of file, write the modified file cache to disk, terminate the controller and wait for next activation
+# If reached the end of file,
+# Go through the completed task, remove all tasks remaining in schedule TODO Templet cache that is present there.
+# Go through the remaining lines of schedule TODO Templet File, append the tasks to the end of the schedule TODO file
+# Then, write the modified file cache to disk, terminate the controller and wait for next activation
 
 # Activation requirement include: 
 # 1. It have passed EXECUTE_AFTER_UNIX_TIME
@@ -42,7 +51,7 @@ pinTODOFolderName = "/home/pi/rawdata/tasks_running"
 # ----------------------------------------------------------------
 # code:
 import time
-
+startTime = time.time()
 # Read lines from feeder status file, schedule TODO file, rfid status file and store them into caches (lists)
 feederStatus = []
 with open(feederStatusFileName) as f:
@@ -55,7 +64,16 @@ with open(scheduleTODOFileName) as f:
     for line in f:
         if not line.startswith('#'):
             scheduleTODO.append(line.strip())
-
+            
+# Read content of schedule TODO Templet File, store all the unique UUIDs and tasks in it.
+scheduleTODOTemplet = {}
+with open(scheduleTODOTempletFileName,'r') as f:
+    for line in f:
+        if not line.startswith('#'):
+            line = line.strip().split(",")
+            # using update to make sure only one UUID is present and older lines are overwritten
+            scheduleTODOTemplet.update({line[0]: line})
+            
 rfidStatus = []
 with open(rfidStatusFileName) as f:
     for line in f:
@@ -66,7 +84,13 @@ with open(rfidStatusFileName) as f:
                     tag = (ln[1],ln[2],ln[3])
                     if tag not in rfidStatus:
                         rfidStatus.append(tag)
-    
+                        
+completedTODO = []
+with open(completedTODOFileName,'r') as f:
+    for line in f:
+        if not line.startswith('#'):
+            line = line.strip().split(",")
+            completedTODO.append(line[0])
 
 # Go through the feeder status cache. For each line:
 # If the line indicate the task is COMPLETED, reset the status to WAITING, store the task ID in completed tasks
@@ -79,6 +103,8 @@ feeders = []
 freeFeeders = []
 newFeederStatus = []
 completedTasks = []
+# current tasks still running, (UUID:pin number)
+currentTasks = {}
 try:
     for fs in feederStatus:
         fStatList = fs.split(",")
@@ -111,6 +137,7 @@ try:
                             # do not modify the PIN as there is a legal task.
                         # if the uuid is the same, meaning pin is still doing its job, write it back
                         newFeederStatus.append(fStatList)
+                        currentTasks[fStatList[4]] = fStatList[2]
                     else:
                         # file is corrupt, clean it and then reset the status
                         print("Error! "+pinTODOFolderName + '/PIN' + fStatList[2] + ".todo contains feeder "+pinStatus[1]+" at "+pinStatus[0]+" to PIN #"+pinStatus[2])
@@ -138,15 +165,6 @@ except:
     print("Exiting abnormally!")
     exit()
             
-newScheduleTODO = []
-# Go through each line of the schedule TODO cache,
-# 1. If a task have pasts its EXPIRE_TIME, then delete the task from file
-# 2. If a task have an ID that was indicated completed, reduce one count from its REPEAT_X_TIMES
-# 3. If a task have a REPEAT_X_TIMES smaller than 1, then delete the task from file cache
-# Then:
-# 1. If a task did not met its activation requirement, skip the task
-# 2. If a task met its activation requirement, execute the task.
-
 
 # Activation requirements: 
 def needToActivate(todoList):
@@ -169,6 +187,17 @@ def needToActivate(todoList):
     return False
 
 
+newScheduleTODO = []
+# Go through each line of the schedule TODO cache,
+# 0. If a task was removed from schedule TODO Templet File, remove it as well (need to flush pin todo and status file) (record it to completed task for good practice)
+# 0.5. If a task is present, remove it from schedule TODO Templet cache
+# 1. If a task have pasts its EXPIRE_TIME, then delete the task from file, record task to completed task
+# 2. If a task have an ID that was indicated completed, reduce one count from its REPEAT_X_TIMES
+# 3. If a task have a REPEAT_X_TIMES smaller than 1, then delete the task from file cache, record task to completed task
+# Then:
+# 1. If a task did not met its activation requirement, skip the task
+# 2. If a task met its activation requirement, execute the task.
+
 try:
     for td in scheduleTODO :
         todoList = td.split(",")
@@ -180,6 +209,7 @@ try:
         if not todoList[1].isdigit():
             print("Unexpected EXECUTE_AFTER_UNIX_TIME in schedule.todo from line \""+td+"\", deleting and continuing...")
             continue
+        
         if len(todoList) < 5:
             todoList.append('1')
         if len(todoList) < 6:
@@ -210,6 +240,39 @@ try:
             continue
         
         # Hopefully now we have a legal line (P.S. This is the second time I am writing this line as thonny crashed on me sigh)
+        
+        # check if the task is purged
+        if not todoList[0] in scheduleTODOTemplet.keys():
+            print('Task deleted before it is done!')
+            # cleaning pintodo file and feeder status
+            if todoList[0] in currentTasks.keys():
+                # this means the task is currently running, need to purge it out of files
+                # cleaning it from the current caches about feeder status
+                for fsIdx in range(len(newFeederStatus)):
+                    if newFeederStatus[fsIdx][2] == currentTasks[todoList[0]]:
+                        # found the task we need to update!
+                        newFeederStatus[fsIdx] = [newFeederStatus[fsIdx][0],newFeederStatus[fsIdx][1],newFeederStatus[fsIdx][2],'WAITING']
+                        # add it to freeFeeders
+                        freeFeeders.append((newFeederStatus[fsIdx][0],newFeederStatus[fsIdx][1]))
+                # cleaning it from the pintodo file
+                open(pinTODOFolderName + '/PIN' + currentTasks[todoList[0]] + ".todo", "w").close()
+                
+            if todoList[0] in completedTasks:
+                # remove this task from the completed tasks list
+                # the feeder is already in freefeeders, no further modification needed
+                completedTasks.remove(todoList[0])
+            
+            # record the current task
+            with open(completedTODOFileName, "a") as f:
+                f.write(','.join(todoList)+','+str(int(time.time()))+"\n")
+            continue
+        
+        # This means current task is present in the templet as well
+        # remove this task for remembering which task have we left
+        scheduleTODOTemplet.pop(todoList[0])
+        
+        
+        
         # digitize all the needed integer fields
         todoList[1] = int(todoList[1])
         todoList[4] = int(todoList[4])
@@ -217,16 +280,34 @@ try:
         todoList[8] = int(todoList[8])
         todoList[9] = int(todoList[9])
         
-        # 1. If a task have pasts its EXPIRE_TIME, then delete the task from file
+        # 1. If a task have pasts its EXPIRE_TIME, then delete the task from file, record task to completed task
         if int(time.time()) > todoList[8]:
+            # Too lazy to create a method for this so just copying
+            todoList[1] = str(todoList[1])
+            todoList[4] = str(todoList[4])
+            todoList[7] = str(todoList[7])
+            todoList[8] = str(todoList[8])
+            todoList[9] = str(todoList[9])
+            # record task to completed task
+            with open(completedTODOFileName, "a") as f:
+                f.write(','.join(todoList)+','+str(int(time.time()))+"\n")
             #skipping this line
             continue
         
         # 2. If a task have an ID that was indicated completed, reduce one count from its REPEAT_X_TIMES
         if todoList[0] in completedTasks:
             todoList[9] = todoList[9] -1
-        # 3. If a task have a REPEAT_X_TIMES smaller than 1, then delete the task from file cache
+        # 3. If a task have a REPEAT_X_TIMES smaller than 1, then delete the task from file cache, record task to completed task
         if todoList[9] < 1:
+            # Too lazy to create a method for this so just copying
+            todoList[1] = str(todoList[1])
+            todoList[4] = str(todoList[4])
+            todoList[7] = str(todoList[7])
+            todoList[8] = str(todoList[8])
+            todoList[9] = str(todoList[9])
+            # record task to completed task
+            with open(completedTODOFileName, "a") as f:
+                f.write(','.join(todoList)+','+str(int(time.time()))+"\n")
             #skipping this line
             continue
         
@@ -286,7 +367,15 @@ except:
     print("Exiting abnormally!")
     exit()
 
+# If reached the end of file,
+# Go through the completed task, remove all tasks remaining in schedule TODO Templet cache that is present there.
+# Go through the remaining lines of schedule TODO Templet File, append the tasks to the end of the schedule TODO file
+# Then, write the modified file cache to disk, terminate the controller and wait for next activation
 
+
+for uuid, task in scheduleTODOTemplet.items():
+    if not uuid in completedTODO:
+        newScheduleTODO.append(task)
 
 # Files caches will be write in the following order:
 # 1. Feeder status file,updating them to the new status
@@ -299,6 +388,4 @@ with open(scheduleTODOFileName,'w') as f:
     for fs in newScheduleTODO:
         f.write(','.join(fs)+"\n")
 
-
-# If reached the end of file, write the modified file cache to disk, terminate the controller and wait for next activation
-
+# print("Controller took "+str((time.time() - startTime)*1000)+" ms to run!")
