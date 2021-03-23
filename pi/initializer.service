@@ -1,0 +1,9 @@
+[Unit]
+Description=service for initilizer
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+ExecStart=python3 /home/pi/initializer.py > /home/pi/rawdata/logs/initializer_output/Current_Instance.log
+[Install]
+WantedBy=multi-user.target
