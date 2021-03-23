@@ -17,10 +17,6 @@ def elephantModuleData(elephant):
     for fd in feedingDataQS:
         if(int(fd.unix_time)>=int(time.time())-84600):
             feedingData.append(fd)
-        else:
-            print(fd.unix_time+" outdated?")
-
-
 
     lastfed = "never"
     numberFeedingsToday =0

@@ -6,18 +6,24 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import datetime
-from .view import index
+from .view import *
+import pytz
 
+
+est = pytz.timezone("US/Eastern")
+central = pytz.timezone("America/Chicago")
 '''this method should take schedules (from a preset) and update the date to
 the current date and mark all of them as active'''
 def create_active_preset_schedules(schedules):
     if(schedules):
         for s in schedules:
-            new_start_time = (s.start_time.time().strftime('%H:%M:%S'))
-            new_end_time = s.end_time.time().strftime('%H:%M:%S')
-            print(new_start_time)
-            print(new_end_time)
-            currentDate = datetime.today().strftime('%Y-%m-%d')
+            print("original start time: "+str(s.start_time))
+            print("original end time: "+str(s.end_time))
+            new_start_time = (s.start_time.astimezone(central).time().strftime('%H:%M:%S'))
+            new_end_time = s.end_time.astimezone(central).time().strftime('%H:%M:%S')
+            print("new start time: "+new_start_time)
+            print("new end time: "+str(new_end_time))
+            currentDate = datetime.now(est).strftime('%Y-%m-%d')
             fullTime = currentDate+" "+new_start_time
             new_startDT = datetime.strptime(fullTime, "%Y-%m-%d %H:%M:%S")
             fullTime = currentDate+" "+new_end_time

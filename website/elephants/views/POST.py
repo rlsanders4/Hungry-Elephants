@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import datetime
-from .view import edit_preset_page
+from .view import edit_preset_page, edit_preset_page2
 
 
 def schedule(request):
