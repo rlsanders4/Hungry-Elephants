@@ -19,6 +19,7 @@
     {% include "elephants/navbar.html" %}
 
     <br>
+    
     <div class=container>
       <div class="jumbotron">
         <h1 class="text-center">All Elephants</h1>
@@ -26,31 +27,41 @@
     </div>
 
     <br>
-    <div class="container">
-      <div class="d-flex justify-content-center">
+      <div class="container">
         <div class = "row">
-          <div class ="col-2">
-              <a href = "/elephants/launchpreset?id=1" class ="btn btn-primary">Preset 1</a>
+          <div class="col-5 text-center">
+              <a href = "/elephants/launchpreset?id=1" class ="btn btn-primary">Preset 1</a>              
           </div>
-          <div class="col-2">
-              <a href ="/elephants/editpreset?id=1" class = "btn btn-secondary">Edit</a>
-          </div>
-          <div class ="col-2">
+          <div class ="col-2 text-center">
             <a href = "/elephants/launchpreset?id=2" class ="btn btn-primary">Preset 2</a>
           </div>
-          <div class="col-2">
-              <a href ="/elephants/editpreset?id=2" class = "btn btn-secondary">Edit</a>
-          </div>
-          <div class ="col-2">
+          <div class ="col-5 text-center">
             <a href = "/elephants/launchpreset?id=3" class ="btn btn-primary">Preset 3</a>
           </div>
-          <div class="col-2">
-              <a href ="/elephants/editpreset?id=3" class = "btn btn-secondary">Edit</a>
+        </div>
+        <br>
+        <div class = "row">
+          <div class="col-5 text-center">
+            <a href ="/elephants/editpreset?id=1" class = "btn btn-link">Edit</a>
           </div>
+          <div class="col-2 text-center">
+            <a href ="/elephants/editpreset?id=2" class = "btn btn-link">Edit</a>
+          </div>
+          <div class="col-5 text-center">
+            <a href ="/elephants/editpreset?id=3" class = "btn btn-link">Edit</a>
+          </div>
+          
         </div>
       </div>
 
+    {% if messages %}
+    <br>
+    <div class="messages container">
+      {% for message in messages %}
+      <h4 class="text-center text-primary"{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h4>
+      {% endfor %}
     </div>
+    {% endif %}
 
     <div class = container>
       <br>
@@ -65,6 +76,7 @@
         {% endfor %}
         </div>
     </div>
+
     
 </body>
 </html>

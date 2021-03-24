@@ -8,6 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from datetime import datetime
 from .view import *
 import pytz
+from django.contrib import messages
 
 
 est = pytz.timezone("US/Eastern")
@@ -57,6 +58,7 @@ def execute_preset(request):
     preset = Preset.objects.get(id=request.GET['id'])
     schedules = preset.schedule_set.all()
     create_active_preset_schedules(schedules)
+    messages.info(request, "Preset " + str(request.GET['id']) + " is activated")
     return index(request)
 
 def mark_inactive_from_active(request):

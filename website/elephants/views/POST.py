@@ -6,7 +6,8 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import datetime
-from .view import edit_preset_page, edit_preset_page2
+from .view import edit_preset_page, edit_preset_page2, index
+from django.contrib import messages
 
 
 def schedule(request):
@@ -23,7 +24,8 @@ def schedule(request):
             sched.feeder = form.cleaned_data['feeder']
             sched.save()
             print("saved schedule")
-            return HttpResponseRedirect(reverse('elephants:schedule'))
+            messages.info(request, "New schedule is activated")
+            return index(request)
     else:
         form = ScheduleForm(initial={'start_time':'2021-03-18 17:30', 'end_time': '2021-03-18 18:00'})
 
