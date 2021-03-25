@@ -1,6 +1,8 @@
 from django.db import models
+from adminops.models import Feeder
+from django.db import transaction
 # Create your models here.
-
+@transaction.atomic
 class RfidData(models.Model):
     rfid_tag_number = models.CharField(max_length=50)
     unix_time = models.CharField(max_length=10)
