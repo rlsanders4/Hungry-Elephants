@@ -36,7 +36,7 @@ tr:nth-child(even) {
 </head>
 <body>
 
-<h2 align="center">RFID Data</h2> 
+<h2 align="center">Feeding Data</h2> 
 <div style="text-align:center">
   <button type="button">Refresh</button>
   <h2>  </h2>
@@ -45,17 +45,33 @@ tr:nth-child(even) {
 
 <table>
   <tr>
-    <th>Unix Time</th>
-    <th>Site Code</th>
-    <th>Feeder</th>
-    <th>RFID Tag Number</th>
+    <th>Task UUID</th>
+    <th>Execute After Unix Time</th>
+    <th>Target Site Code</th>
+    <th>Target Feeder Number</th>
+    <th>Amount</th>
+    <th>If Recieve From Antenna Number</th>
+    <th>If Recieve From Tag Number</th>
+    <th>Interval Time</th>
+    <th>Expire Time</th>
+    <th>Repeat X Times</th>
+    <th>UnknownChangeItLater</th>
   </tr>
   {% for item in FeedingData %}
     <tr> 
-        <td>{{ item.unix_time }}</td>
-        <td>{{ item.site_code }}</td>
-        <td>{{ item.antenna_number }}</td>
-        <td>{{ item.rfid_tag_number }}</td>
+        <td>{{ item.TASK_UUID }}</td>
+        <td>{{ item.EXECUTE_AFTER_UNIX_TIME }}</td>
+        <td>{{ item.TARGET_SITE_CODE }}</td>
+        <td>{{ item.TARGET_FEEDER_NUMBER }}</td>
+        <td>{{ item.AMOUNT }}</td>
+        <td>{{ item.IF_RECIEVE_FROM_ANTENNA_NUMBER }}</td>
+        <td>{{ item.IF_RECIEVE_FROM_TAG_NUMBER }}</td>
+        <td>{{ item.INTERVAL_TIME }}</td>
+        <td>{{ item.EXPIRE_TIME }}</td>
+        <td>{{ item.REPEAT_X_TIMES }}</td>
+        <td>{{ item.Unknown }}</td>
+
+
     </tr>
     {% endfor %}
 

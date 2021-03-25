@@ -1,7 +1,7 @@
 import sqlite3
 # gather feeding data
 
-feeding_data = [('2442', '1300', 'ATE', '10'), ('2441', '1300', 'ATE', '10'), ('2440', '1400', 'ATE', '10')]
+#feeding_data = [('2442', '1300', 'ATE', '10'), ('2441', '1300', 'ATE', '10'), ('2440', '1400', 'ATE', '10')]
 
 con = sqlite3.connect('db.sqlite3')
 

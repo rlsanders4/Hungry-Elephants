@@ -5,4 +5,5 @@ from . import views
 app_name = 'datalog'
 urlpatterns = [
     path('', views.index, name='index'),
+    path('feedingdata', views.feedingdata, name='feedingdata'),
 ]
