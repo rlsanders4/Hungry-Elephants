@@ -10,8 +10,7 @@ from elephants.models import Schedule
 class ScheduleBuilder():
     # interval: time interval in s between schedule pulls
     # distributor: distributor object
-    def __init__(this, interval, distributor):
-        this.interval = interval
+    def __init__(this, distributor):
         this.distributor = distributor
         from pi_manager.distributor import Distributor
         if this.distributor is Distributor:
@@ -25,7 +24,6 @@ class ScheduleBuilder():
     # get schedules and distribute if necessary
     def run(this):
         this.getSchedules()
-        time.sleep(1)
     
     def getSchedules(this):
         scheduleList = list(Schedule.objects.all())
@@ -39,6 +37,6 @@ class ScheduleBuilder():
             startTime = str(int(schedule.start_time.timestamp()))
             interval = str(schedule.interval.seconds)
             endTime = str(int(schedule.end_time.timestamp()))
-            line = str(uuid.uuid1()) + "," + startTime + "," + "AAA,F1,1,A1," + str(schedule.elephant.rfid) + "," + interval + "," + endTime + "," + str(schedule.max_feeds)
+            line = str(uuid.uuid4()) + "," + startTime + "," + "AAA,F1,1,A1," + str(schedule.elephant.rfid) + "," + interval + "," + endTime + "," + str(schedule.max_feeds)
             result += line + '\n'
         return result

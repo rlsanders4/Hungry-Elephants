@@ -19,16 +19,8 @@ from django.contrib.auth.models import User
 from adminops.models import Pi
 from elephants.models import Schedule, Elephant
 
-for user in User.objects.all():
-    print(user.username)
-
-for pi in Pi.objects.all():
-     print(pi.name)
-
-for schedule in Schedule.objects.all():
-    print(schedule.name)
-
-dummy_data.createDummyData()
+#dummy_data.createDummyData()
+dummy_data.createDummyElephant()
 
 #initialize distributor, schedule builder, and connector
 
@@ -42,11 +34,19 @@ def run():
     connector = Connector()
     connector.connect_pis()
     pis = connector.get_pis()
-    distributor = Distributor(5, pis)
-    scheduleBuilder = ScheduleBuilder(5, distributor)
+    distributor = Distributor(pis)
+    scheduleBuilder = ScheduleBuilder(distributor)
     while(running):
-        
+        # attempt to build and distribute schedules
         scheduleBuilder.run()
+        # verify pi connections and update
+        connector.update_connection_status()
+        connector.connect_pis()
+        pis = connector.get_pis()
+        distributor.pis = pis
+        time.sleep(2)
+
+
 
 thread = threading.Thread(target=run, args=())
 thread.start()

@@ -11,8 +11,7 @@ from ftplib import FTP
 class Distributor():
     # pis = List of Pi objects
     # interval = interval in s for schedule updating/distributing
-    def __init__(this, interval, pis):
-        this.interval = interval
+    def __init__(this, pis):
         this.pis = pis
         for pi in this.pis:
             if pi.connected == False:
@@ -28,23 +27,22 @@ class Distributor():
             print("Distributing to: ", end='')
             print(pi.name)
             print(scheduleData)
-            if(pi.ftp is not None):
-                try:
-                    pi.ftp = FTP("192.168.0.4")
-                    pi.ftp.login("ftpuser", "password")
-                    pi.ftp.cwd("dir")
-                    # pi.ftp.delete("schedules.todo.template")
-                    with open("schedules.todo.template", "w") as file:
-                        file.write(scheduleData)
-                        file.close()
-                    with open("schedules.todo.template", "rb") as file:
-                        pi.ftp.storlines("STOR schedules.todo.template", file)
-                        file.close()
-                    pi.ftp.close()
-                    print("successfully written to pi")
-                except Exception as e:
-                    print(e)
-                    print("Error sending schedule to pi " + pi.name)
+            try:
+                ftp = FTP("192.168.0.4")
+                ftp.login("ftpuser", "password")
+                ftp.cwd("dir")
+                # pi.ftp.delete("schedules.todo.template")
+                with open("schedules.todo.template", "w") as file:
+                    file.write(scheduleData)
+                    file.close()
+                with open("schedules.todo.template", "rb") as file:
+                    ftp.storlines("STOR schedules.todo.template", file)
+                    file.close()
+                ftp.close()
+                print("successfully written to pi")
+            except Exception as e:
+                print(e)
+                print("Error sending schedule to pi " + pi.name)
 
 
 class DummyDistributor(Distributor):
