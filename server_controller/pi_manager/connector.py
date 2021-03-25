@@ -18,7 +18,7 @@ class Connector():
             for pi in this.pis:
                 pi.connected = this.verify_connection(pi)
                 if(pi.connected):
-                        print("Pi " + pi.name + " connected")
+                    print("Pi " + pi.name + " connected")
                 pi.save()
         else:
             oldpis = this.pis

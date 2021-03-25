@@ -1,9 +1,11 @@
 from elephants.models import Elephant, Schedule
 import datetime
 
+ELEPHANT_NAME = "SERVERCONTROLLER_TEST_ELEPHANT"
+
 def createDummyData():
     e = Elephant()
-    e.name = "SERVERCONTROLLER_TEST_ELEPHANT"
+    e.name = ELEPHANT_NAME
     e.rfid = "1234567890"
     e.save()
 
@@ -42,12 +44,12 @@ def createDummyData():
 
 def createDummyElephant():
     e = Elephant()
-    e.name = "SERVERCONTROLLER_TEST_ELEPHANT"
+    e.name = ELEPHANT_NAME
     e.rfid = "1234567890"
     e.save()
 
 def clearDummyData():
-    els = Elephant.objects.filter(name="SERVERCONTROLLER_TEST_ELEPHANT")
+    els = Elephant.objects.filter(name=ELEPHANT_NAME)
     for e in els:
         Schedule.objects.filter(elephant=e).delete()
     els.delete()

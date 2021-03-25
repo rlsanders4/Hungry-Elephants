@@ -8,3 +8,4 @@ website/adminops/static/adminops/*.png
 website/adminops/static/adminops/*.gif
 server_controller/schedules.todo.template
 server_controller/local_test.txt
+server_controller/tests/db.sqlite3
