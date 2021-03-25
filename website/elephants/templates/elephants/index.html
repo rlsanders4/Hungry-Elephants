@@ -54,20 +54,16 @@
 
     <div class = container>
       <br>
-      <div class="card-deck">
-
-          {% for elephant in elephants1 %}
-                 {% include "elephants/elephant_tile.html" with elephant=elephant %}
-          {% endfor %}
-
-      </div>
+        <div class="card-deck">
+        {% for elephant, data in elephantInfo %}
+                 {% include "elephants/elephant_tile.html" with elephant=elephant data=data %}
+            {% if forloop.counter|divisibleby:2 %}
+        </div>
         <br>
-      <div class = "card-deck">
-          {% for elephant in elephants2 %}
-            {% include "elephants/elephant_tile.html" with elephant=elephant %}
-          {% endfor %}
-      </div>
-      <br>
+        <div class="card-deck">
+            {% endif %}
+        {% endfor %}
+        </div>
     </div>
     
 </body>
