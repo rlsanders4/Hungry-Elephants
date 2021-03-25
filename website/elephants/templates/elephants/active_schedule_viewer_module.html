@@ -1,0 +1,17 @@
+<div>
+        <tr>
+            <th scope="row">{{ schedule.id }}</th>
+            <td>{{ schedule.elephant }}</td>
+            <td>{{ schedule.start_time }}</td>
+            <td>{{ schedule.end_time }}</td>
+            <td>{{ schedule.interval }}</td>
+            <td>{{ schedule.max_feeds }}</td>
+            <td>{{ schedule.feeder }}</td>
+            <td>
+                <a href="/elephants/markinactivefromactive?id={{ schedule.id }}" class="btn btn-link">Mark Inactive</a>
+            </td>
+            <td>
+                <a href="/elephants/deleteschedulefromactive?id={{ schedule.id }}" class="btn btn-link">Delete</a>
+            </td>
+        </tr>
+</div>
