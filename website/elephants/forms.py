@@ -10,12 +10,12 @@ from datetime import timedelta
 class ScheduleForm(forms.ModelForm):
     class Meta:
         model = Schedule
-        fields = ('elephant', 'start_date','start_time_temp', 'end_date', 'end_time_temp', 'interval', 'max_feeds', 'feeder',)
+        fields = ('elephant', 'start_date','start_time', 'end_date', 'end_time', 'interval', 'max_feeds', 'feeder',)
         widgets = {
             'elephant': forms.Select(attrs={'class': 'form-control col-4'}),
-            'start_time_temp': forms.TimeInput(attrs={'class':'form-control col-4', 'type' : 'time'}),
+            'start_time': forms.TimeInput(attrs={'class':'form-control col-4', 'type' : 'time'}),
             'start_date': forms.DateInput(attrs={'class': 'form-control col-4', 'type' : 'date'}),
-            'end_time_temp': forms.TimeInput(attrs={'class': 'form-control col-4', 'type' : 'time'}),
+            'end_time': forms.TimeInput(attrs={'class': 'form-control col-4', 'type' : 'time'}),
             'end_date': forms.DateInput(attrs={'class': 'form-control col-4','type' : 'date'}),
             'interval': forms.TextInput(attrs={'class': 'form-control col-4'}),
             'max_feeds': forms.NumberInput(attrs={'class': 'form-control col-4'}),
