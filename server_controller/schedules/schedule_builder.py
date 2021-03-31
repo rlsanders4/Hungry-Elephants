@@ -26,7 +26,7 @@ class ScheduleBuilder():
         this.getSchedules()
     
     def getSchedules(this):
-        scheduleList = list(Schedule.objects.all())
+        scheduleList = list(Schedule.objects.filter(active=True))
         if(scheduleList != this.schedules):
             this.schedules = scheduleList
             this.distributor.distribute(this.formatSchedules(this.schedules))
@@ -37,6 +37,7 @@ class ScheduleBuilder():
             startTime = str(int(schedule.start_time.timestamp()))
             interval = str(schedule.interval.seconds)
             endTime = str(int(schedule.end_time.timestamp()))
-            line = str(uuid.uuid4()) + "," + startTime + "," + "AAA,F1,1,A1," + str(schedule.elephant.rfid) + "," + interval + "," + endTime + "," + str(schedule.max_feeds)
+            feederTag = str(schedule.feeder.tag)
+            line = str(uuid.uuid4()) + "," + startTime + "," + "AAA," + feederTag + ",1,A1," + str(schedule.elephant.rfid) + "," + interval + "," + endTime + "," + str(schedule.max_feeds)
             result += line + '\n'
         return result

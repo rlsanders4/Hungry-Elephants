@@ -1,4 +1,5 @@
 from elephants.models import Elephant, Schedule
+from adminops.models import Feeder
 import datetime
 
 ELEPHANT_NAME = "SERVERCONTROLLER_TEST_ELEPHANT"
@@ -11,6 +12,7 @@ def createDummyData():
 
     s1 = Schedule()
     s1.elephant = e
+    s1.feeder = list(Feeder.objects.all())[0]
     s1.start_time = datetime.datetime(2021, 3, 19, 8)
     s1.end_time = datetime.datetime(2021, 3, 19, 10)
     s1.interval = datetime.timedelta(hours=1)
@@ -20,6 +22,7 @@ def createDummyData():
 
     s2 = Schedule()
     s2.elephant = e
+    s2.feeder = list(Feeder.objects.all())[0]
     s2.start_time = datetime.datetime(2021, 3, 19, 1)
     s2.end_time = datetime.datetime(2021, 3, 19, 2)
     s2.interval = datetime.timedelta(hours=1)
@@ -29,6 +32,7 @@ def createDummyData():
 
     s3 = Schedule()
     s3.elephant = e
+    s3.feeder = list(Feeder.objects.all())[0]
     s3.start_time = datetime.datetime(2021, 3, 19, 6)
     s3.end_time = datetime.datetime(2021, 3, 19, 7)
     s3.interval = datetime.timedelta(minutes=20)
