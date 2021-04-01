@@ -56,6 +56,7 @@ def initDjangoTest():
             'django.contrib.messages',
             'django.contrib.staticfiles',
             'adminops.apps.AdminopsConfig',
+            'datalog.apps.DatalogConfig',
         ]
     )
     django.setup()

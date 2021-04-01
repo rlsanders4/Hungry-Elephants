@@ -44,7 +44,9 @@ def pisetup(request):
 def piedit(request):
     if request.method == "POST":
         pi = Pi.objects.get(id=request.POST["id"])
-        form = PiForm(request.POST)
+        feeders = Feeder.objects.filter(connected_to=pi.id)
+        antennas = Antenna.objects.filter(connected_to=pi.id)
+        form = PiForm(request.POST, instance=pi)
         if form.is_valid():
             pi.name = request.POST["name"]
             pi.ip = request.POST["ip"]
@@ -56,8 +58,8 @@ def piedit(request):
         pi = Pi.objects.get(id=request.GET["id"])
         feeders = Feeder.objects.filter(connected_to=pi.id)
         antennas = Antenna.objects.filter(connected_to=pi.id)
-        form = PiForm(initial={"name": pi.name, "ip": pi.ip, "port": pi.port, "path": pi.path})
-        return render(request, 'adminops/piedit.html', {"name": "Hungry Elephants Administration", "pi": pi, "form": form, "feeders": feeders, "antennas": antennas})
+        form = PiForm(initial={"name": pi.name, "ip": pi.ip, "port": pi.port, "path": pi.path}, instance=pi)
+    return render(request, 'adminops/piedit.html', {"name": "Hungry Elephants Administration", "pi": pi, "form": form, "feeders": feeders, "antennas": antennas})
 
 # view for returning ONLY the pi list
 @staff_member_required

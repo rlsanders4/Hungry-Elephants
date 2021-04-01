@@ -1,4 +1,6 @@
-from django.forms import ModelForm
+from django.core.exceptions import ValidationError
+from django.db.models.fields import IPAddressField, CharField
+from django.forms import ModelForm, Field
 from adminops.models import *
 
 class PiForm(ModelForm):
@@ -15,3 +17,4 @@ class AntennaForm(ModelForm):
     class Meta:
         model = Antenna
         fields = ['name','tag']
+
