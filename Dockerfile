@@ -19,6 +19,7 @@ RUN pip install -r requirements.txt
 # copy project
 COPY ./server_controller /code/server_controller
 COPY ./website /code/website
+COPY ./db /code/db
 
 EXPOSE 8000
 
