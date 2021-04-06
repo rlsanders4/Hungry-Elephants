@@ -15,7 +15,7 @@ STATE = "state"
 # path to the schedule template, no '/' at the end
 SCHEDULES_TEMPLATE_DIR = "shared_data"
 # name of schedule template
-SCHEDULES_TEMPLATE_NAME = "schedules.todo.template"
+SCHEDULES_TEMPLATE_NAME = "schedule.todo.template"
 # path to the RFID logdata, no '/' at the end
 LOGDATA_DIR = "shared_data"
 # name of the RFID logdata file
@@ -29,4 +29,6 @@ COMPLETED_NAME = "completed.todo"
 DUMMY_NUM = 99
 # file for dummy state
 DUMMY_STATE = "dummy_state"
+
+TEST_PATH = ""
 
