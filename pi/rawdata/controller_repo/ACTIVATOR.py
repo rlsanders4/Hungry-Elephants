@@ -1,15 +1,23 @@
-#!/usr/bin/env python
-import _thread
+#!/usr/bin/env python3
+from threading import Thread 
 from gpiozero import LED
 import time
+import os
+import sys
 
 # the delay between triggers in second
 delay = 2
 # Duration of each on signal
 duration = 1
 
+# only allow one ACTIVATOR running
+if os.popen("pgrep -a python | grep 'ACTIVATOR.py'").read().count('\n') > 1:
+    # This means there are already an instence running.
+    sys.exit("\nOnly one ACTIVATOR instence can be executed at the same time!\n")
+
 # Define a function for the pin thread
 def aktivieren(fs):
+    print('Executing: '+ fs[4])
     filename = '/home/pi/rawdata/tasks_running/PIN' + fs[2] + '.todo'
     with open(filename, "r") as f:
         commands = f.readlines()
@@ -41,13 +49,24 @@ def triggerPin(cmd):
     
     
 feederStatusFile = '/home/pi/shared_data/feeder.status'
+
+
 with open(feederStatusFile, "r") as f:
     feederStatuses = f.readlines()
 
+threads = []
 for feederStatus in feederStatuses:
     if feederStatus[0] != '#':
         fs = feederStatus.strip("\n").split(",")
         if fs[3] == "BUZY":
-            _thread.start_new_thread(aktivieren,(fs,))
+            thread = Thread(target = aktivieren, args = (fs, ))
+            thread.start()
+            threads.append(thread)
+
+for thread in threads:
+    thread.join()
+
+print('Job done!')
+            
             
         
