@@ -29,3 +29,8 @@ COMPLETED_NAME = "completed.todo"
 DUMMY_NUM = 99
 # file for dummy state
 DUMMY_STATE = "dummy_state"
+
+##
+## FOR TESTING, LEAVE EMPTY STRING FOR NORMAL BEHAVIOR
+##
+TEST_PATH = ""

@@ -31,7 +31,8 @@ class Distributor():
             try:
                 ftp = FTP(str(pi.ip))
                 ftp.login(config.USERNAME, config.PASSWORD)
-                ftp.cwd(str(pi.path))
+                if(config.TEST_PATH != ""):
+                    ftp.cwd(config.TEST_PATH)
                 ftp.cwd(config.SCHEDULES_TEMPLATE_DIR)
                 with open(config.DATA_DIR + config.SCHEDULES_TEMPLATE_NAME, "w") as file:
                     file.write(scheduleData)
