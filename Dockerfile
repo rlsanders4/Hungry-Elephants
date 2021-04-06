@@ -22,6 +22,9 @@ COPY ./website /code/website
 COPY ./db /code/db
 COPY ./run.sh /code/run.sh
 
+# Migrate
+# RUN python /code/website/manage.py migrate
+
 EXPOSE 8000
 
 CMD ["bash", "./run.sh"]
