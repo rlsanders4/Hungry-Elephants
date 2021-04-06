@@ -5,11 +5,15 @@
 
 from adminops.models import Pi
 from ftplib import FTP
+from . import config
+
+tag = "(Connector) "
 
 class Connector():
     # dummyMode: True iff simulated connections are desired for the sake of testing
-    def __init__(this):
+    def __init__(this, logger):
         this.pis = list()
+        this.logger = logger
 
     # get pi connections from the DB
     def connect_pis(this):
@@ -18,7 +22,7 @@ class Connector():
             for pi in this.pis:
                 pi.connected = this.verify_connection(pi)
                 if(pi.connected):
-                    print("Pi " + pi.name + " connected")
+                    this.logger.logInfo(tag + "Pi " + pi.name + " connected")
                 pi.save()
         else:
             oldpis = this.pis
@@ -28,12 +32,18 @@ class Connector():
                 for pi in this.pis:
                     pi.connected = this.verify_connection(pi)
                     if(pi.connected):
-                        print("Pi " + pi.name + " connected")
+                        this.logger.logInfo(tag + "Pi " + pi.name + " connected")
                     pi.save()
 
     def get_pis(this):
-        assert(len(this.pis) > 0), "No pi connections found"
+        if(len(this.pis) == 0):
+            this.logger.logWarn(tag + "No pi connections found")
         return this.pis
+
+    def dc_pis(this):
+        for pi in this.pis:
+            pi.connected = False
+            pi.save()
 
     def update_connection_status(this):
         for pi in this.pis:
@@ -43,11 +53,11 @@ class Connector():
     def verify_connection(this, pi):
         try:
             ftp = FTP(str(pi.ip))
-            ftp.login("ftpuser", "password")
+            ftp.login(config.USERNAME, config.PASSWORD)
             ftp.close()
             return True
         except Exception:
-            print("Pi " + pi.name + " unable to connect")
+            this.logger.logWarn(tag + "Pi " + pi.name + " unable to connect")
             return False
 
 

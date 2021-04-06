@@ -20,6 +20,7 @@ sys.path.append(path)
 def initDjango():
     # Get the base django project directory again
     BASE_DIR = Path(__file__).resolve().parent.parent / 'website'
+    HUNGRY_ELEPHANTS_DIR = Path(__file__).resolve().parent.parent
 
     settings.configure(
         BASE_DIR = BASE_DIR,
@@ -27,7 +28,7 @@ def initDjango():
         DATABASES={
             'default': {
                 'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': BASE_DIR / 'db.sqlite3',
+                'NAME': HUNGRY_ELEPHANTS_DIR / 'db' / 'db.sqlite3',
             }
         },
         # Keep this up-to-date; any model we want to access from the server controller must have
@@ -41,6 +42,7 @@ def initDjango():
             'django.contrib.messages',
             'django.contrib.staticfiles',
             'adminops.apps.AdminopsConfig',
+            'datalog.apps.DatalogConfig',
         ]
     )
     django.setup()

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import os
 import sys
 from configparser import ConfigParser
@@ -302,14 +302,19 @@ while True:
     #----------------------------------------------------------
     # Done with the config
     # running task
+    
+    # YOLO
+    os.system('sudo chmod -R 777 /home/pi/shared_data')
+    os.system('sudo chmod -R 777 /home/pi/rawdata')
+    
     if not demomode:
-        os.system('python3 /home/pi/controller.py &')
-        time.sleep(executionDelay)
-        os.system('python3 /home/pi/ACTIVATOR.py &')
-        time.sleep(endDelay)
-    else:
         os.system('python3 /home/pi/controller.py')
+        time.sleep(executionDelay)
         os.system('python3 /home/pi/ACTIVATOR.py')
+        time.sleep(endDelay)
+    #else:
+        # os.system('python3 /home/pi/controller.py')
+        # os.system('python3 /home/pi/ACTIVATOR.py')
         
         
     if counter == 0:
