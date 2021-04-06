@@ -1,7 +1,7 @@
 from pathlib import Path
 # FTP username/password
-USERNAME = "ftpuser"
-PASSWORD = "password"
+USERNAME = "pi"
+PASSWORD = "elephant"
 # data folder, including '/' at the end
 DATA_DIR = str(Path(__file__).resolve().parent.parent / "data") + "/"
 # stores logging state after stopping

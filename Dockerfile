@@ -20,7 +20,8 @@ RUN pip install -r requirements.txt
 COPY ./server_controller /code/server_controller
 COPY ./website /code/website
 COPY ./db /code/db
+COPY ./run.sh /code/run.sh
 
 EXPOSE 8000
 
-CMD ["python3", "./website/manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["bash", "./run.sh"]
