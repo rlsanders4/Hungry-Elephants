@@ -56,7 +56,7 @@ def piedit(request):
         pi = Pi.objects.get(id=request.GET["id"])
         feeders = Feeder.objects.filter(connected_to=pi.id)
         antennas = Antenna.objects.filter(connected_to=pi.id)
-        form = PiForm(initial={"name": pi.name, "ip": pi.ip, "port": pi.port, "path": pi.path}, instance=pi)
+        form = PiForm(initial={"name": pi.name, "ip": pi.ip, "port": pi.port}, instance=pi)
     return render(request, 'adminops/piedit.html', {"name": "Hungry Elephants Administration", "pi": pi, "form": form, "feeders": feeders, "antennas": antennas})
 
 # view for returning ONLY the pi list

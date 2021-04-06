@@ -6,7 +6,7 @@
             <th scope="col">Site Code</th>
             <th scope="col">IP</th>
             <th scope="col">Port</th>
-            <th scope="col">Path</th>
+
             <th scope="col">Status</th>
             <th scope="col"># Feeders</th>
             <th scope="col"># Antennas</th>
@@ -20,7 +20,6 @@
                 <td>{{ pi.site_code }}</td>
                 <td>{{ pi.ip }}</td>
                 <td>{{ pi.port }}</td>
-                <td>{{ pi.path }}</td>
                 {% if pi.connected %}
                     <td class="text-success">Connected</td>
                 {% else %}
