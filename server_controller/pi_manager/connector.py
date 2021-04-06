@@ -40,6 +40,11 @@ class Connector():
             this.logger.logWarn(tag + "No pi connections found")
         return this.pis
 
+    def dc_pis(this):
+        for pi in this.pis:
+            pi.connected = False
+            pi.save()
+
     def update_connection_status(this):
         for pi in this.pis:
             pi.connected = this.verify_connection(pi)
@@ -52,7 +57,7 @@ class Connector():
             ftp.close()
             return True
         except Exception:
-            this.logger.log(tag + "Pi " + pi.name + " unable to connect")
+            this.logger.logWarn(tag + "Pi " + pi.name + " unable to connect")
             return False
 
 
