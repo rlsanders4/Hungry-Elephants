@@ -9,6 +9,9 @@ Quickstart:
 
 Have a docker-capable machine, run this command:
 docker run -v feeder_data:/code/db -p 8888:8001 -i -t --restart=always --name rfid_feeder demonte77/rfid_feeder:latest
+Once the server is started, run the following commands to restart it for good luck : )
+docker container stop rfid_feeder
+docker container start rfid_feeder
 
 Then on the same subnet (pi's IP accessable),
 Go to https://pi.zopyr.us to download the latest pi image.
