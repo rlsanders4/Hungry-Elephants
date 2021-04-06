@@ -5,9 +5,12 @@ from elephants.models import Schedule
 # Create your tests here.
 class ElephantsModelTest(TestCase):
 
+
+
     elephantId = Elephant.objects.all()[0].id
     presetId = Preset.objects.all()[0].id
     scheduleId = Schedule.objects.all()[0].id
+
 
     #elephant test
     def test_elephant_name_label(self):
