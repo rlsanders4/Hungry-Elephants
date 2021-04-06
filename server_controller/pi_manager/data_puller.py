@@ -33,7 +33,8 @@ class DataPuller():
             try:
                 ftp = FTP(str(pi.ip))
                 ftp.login(config.USERNAME, config.PASSWORD)
-                ftp.cwd(str(pi.path))
+                if(config.TEST_PATH != ""):
+                    ftp.cwd(config.TEST_PATH)
                 ftp.cwd(config.COMPLETED_DIR)
                 with open(config.DATA_DIR + str(pi.id) + config.COMPLETED_NAME, 'wb') as local_file:
                     response = ftp.retrbinary('RETR ' + config.COMPLETED_NAME, local_file.write)
@@ -78,7 +79,8 @@ class DataPuller():
             try:
                 ftp = FTP(str(pi.ip))
                 ftp.login(config.USERNAME, config.PASSWORD)
-                ftp.cwd(str(pi.path))
+                if(config.TEST_PATH != ""):
+                    ftp.cwd(config.TEST_PATH)
                 ftp.cwd(config.LOGDATA_DIR)
                 with open(config.DATA_DIR + str(pi.id) + config.LOGDATA_NAME, "wb") as local_file:
                     response = ftp.retrbinary('RETR ' + config.LOGDATA_NAME, local_file.write)
@@ -121,7 +123,8 @@ class DataPuller():
             try:
                 ftp = FTP(str(pi.ip))
                 ftp.login(config.USERNAME, config.PASSWORD)
-                ftp.cwd(str(pi.path))
+                if(config.TEST_PATH != ""):
+                    ftp.cwd(config.TEST_PATH)
                 ftp.cwd(config.LOGDATA_DIR)
                 with open(config.DATA_DIR + str(pi.id) + config.LOGDATA_NAME, "w") as local_file:
                     local_file.write("")
@@ -139,7 +142,8 @@ class DataPuller():
             try:
                 ftp = FTP(str(pi.ip))
                 ftp.login(config.USERNAME, config.PASSWORD)
-                ftp.cwd(str(pi.path))
+                if(config.TEST_PATH != ""):
+                    ftp.cwd(config.TEST_PATH)
                 ftp.cwd(config.COMPLETED_DIR)
                 with open(config.DATA_DIR + str(pi.id) + config.COMPLETED_NAME, "w") as local_file:
                     local_file.write("")

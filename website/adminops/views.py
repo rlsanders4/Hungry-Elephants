@@ -32,7 +32,6 @@ def pisetup(request):
             pi.name = request.POST["name"]
             pi.ip = request.POST["ip"]
             pi.port = request.POST["port"]
-            pi.path = request.POST["path"]
             pi.save()
             return HttpResponseRedirect(reverse('adminops:index'))
     else:
@@ -51,7 +50,6 @@ def piedit(request):
             pi.name = request.POST["name"]
             pi.ip = request.POST["ip"]
             pi.port = request.POST["port"]
-            pi.path = request.POST["path"]
             pi.save()
             return HttpResponseRedirect(reverse('adminops:index'))
     else:

@@ -104,6 +104,7 @@ class DistributorThread(Thread):
             connector.connect_pis()
             distributor.pis = connector.get_pis()
             this.wait(DistributorThread.interval)
+        connector.dc_pis()
         logger.logInfo("Schedule distribution thread stopped.")
 
 # data pulling thread
@@ -142,6 +143,7 @@ class DataPullerThread(Thread):
             connector.connect_pis()
             dataPuller.pis = connector.get_pis()
             this.wait(DataPullerThread.interval)
+        connector.dc_pis()
         logger.logInfo("Data pulling thread stopped.")
 
 thread1 = DistributorThread()
