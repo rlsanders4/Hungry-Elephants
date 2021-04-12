@@ -15,6 +15,8 @@ layout = [[sg.Text("Control panel for pi",font = ('sans-serif',25),text_color=('
           [sg.Button("run controller",font = ('sans-serif',15))],
           [sg.Button("run ACTIVATOR",font = ('sans-serif',15))],
           [sg.Text(" ",font = ('sans-serif',18))],
+          [sg.Button("HARD reset",button_color=('white', 'red'),font = ('mono',30))],
+          [sg.Text(" ",font = ('sans-serif',18))],
           [sg.Button("Backup to Image",font = ('sans-serif',15))],
           [sg.Button("exit",font = ('sans-serif',15))]]
 
@@ -42,6 +44,8 @@ while True:
         os.system("sudo python3 /home/pi/ACTIVATOR.py &")
     if event == "Backup to Image":
         os.system("sudo bash /home/pi/createImage.sh")
+    if event == "HARD reset everything from remote":
+        os.system("sudo bash /home/pi/hard_reset.sh")
     # End program if user closes window or
     # presses the exit button
     if event == "exit" or event == sg.WIN_CLOSED:
