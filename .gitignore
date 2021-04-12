@@ -13,3 +13,5 @@ server_controller/tests/db.sqlite3
 # data:
 server_controller/data/*
 !server_controller/data/.empty
+# This repo:
+pi/rawdata/original_files/*
