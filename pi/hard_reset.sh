@@ -10,7 +10,7 @@ git fetch --all
 git reset --hard origin/release
 
 echo 'Resetting all files....'
-cp –R /home/pi/rawdata/original_files/Hungry-Elephants/pi /home/pi
+\cp -r -f /home/pi/rawdata/original_files/Hungry-Elephants/pi/* /home/pi
 
 echo 'Setting up soft links.....'
 rm /home/pi/Desktop/start
