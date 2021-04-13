@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>{{name}}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'datalog/index.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src = "{% static 'datalog/index.js' %}"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,600,700" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+
+ {% include "elephants/navbar.html" %}
+
+
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h2 align="center">Feeding Data</h2> 
+<div style="text-align:center">
+  <a href="/datalog/feedingdata" class="btn btn-primary mr-1">Refresh</a>
+  <a href="/datalog/completedTaskcsv" class="btn btn-primary mr-1">Download</a>
+  <h2>  </h2>
+</div>
+
+
+<table>
+  <tr>
+    <th>Task UUID</th>
+    <th>Execute After Unix Time</th>
+    <th>Target Site Code</th>
+    <th>Target Feeder Number</th>
+    <th>Amount</th>
+    <th>If Recieve From Antenna Number</th>
+    <th>If Recieve From Tag Number</th>
+    <th>Interval Time</th>
+    <th>Expire Time</th>
+    <th>Repeat X Times</th>
+    <th>Completed Time</th>
+  </tr>
+  {% for item in FeedingData %}
+    <tr> 
+        <td>{{ item.task_uuid }}</td>
+        <td>{{ item.execute_after_UNIX_time }}</td>
+        <td>{{ item.target_site_code }}</td>
+        <td>{{ item.target_feeder_number }}</td>
+        <td>{{ item.amount }}</td>
+        <td>{{ item.if_recieve_from_antenna_number }}</td>
+        <td>{{ item.if_recieve_from_tag_number }}</td>
+        <td>{{ item.interval_time }}</td>
+        <td>{{ item.expire_time }}</td>
+        <td>{{ item.repeat_X_times}}</td>
+        <td>{{ item.completed_time}}</td>
+
+
+    </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>
+
