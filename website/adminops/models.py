@@ -8,11 +8,9 @@ class Pi(models.Model):
     name = models.CharField(max_length=50, default="Pi") #name seen by users
     ip = models.GenericIPAddressField(protocol='IPv4', unique=True) #IPv4 address
     port = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(65535)]) #port number
-    #TODO: verification for server paths
-    path = models.CharField(max_length=200) #path of file server
     connected = models.BooleanField(default=False)
     # ASK FOR SITE CODE
-    site_code = models.CharField(max_length=10, default="AAA") #site code associated with reader box and antennas
+    site_code = models.CharField(max_length=10, default="AAA", unique=True) #site code associated with reader box and antennas
 
     def __str__(self):
         return self.name + " " + str(self.id)

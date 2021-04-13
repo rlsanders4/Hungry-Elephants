@@ -11,31 +11,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 </head>
-
  {% include "elephants/navbar.html" %}
-
-
-
-<style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-</style>
 </head>
-<body>
 
+<<<<<<< HEAD
 <h2 align="center">RFID Data</h2> 
 <div style="text-align:center">
   
@@ -61,6 +40,39 @@ tr:nth-child(even) {
     {% endfor %}
 
 </table>
+=======
+<body>
+<br>
+<div class="container text-center">
+  <div class="jumbotron">
+    <h1>Feeding Data</h1>
+  </div>
+  <button class="btn btn-primary">Refresh</button>
+</div>
+<br>
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Unix Time</th>
+        <th scope="col">Site Code</th>
+        <th scope="col">Feeder</th>
+        <th scope="col">RFID Tag Number</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for item in FeedingData %}
+      <tr> 
+          <td>{{ item.unix_time }}</td>
+          <td>{{ item.site_code }}</td>
+          <td>{{ item.antenna_number }}</td>
+          <td>{{ item.rfid_tag_number }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+>>>>>>> master
 
 </body>
 </html>

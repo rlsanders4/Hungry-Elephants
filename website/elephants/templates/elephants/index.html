@@ -18,6 +18,15 @@
 
     {% include "elephants/navbar.html" %}
 
+    {% if messages %}
+    <br>
+    <div class="messages container">
+      {% for message in messages %}
+      <h4 class="text-center text-primary border border-primary"{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h4>
+      {% endfor %}
+    </div>
+    {% endif %}
+
     <br>
     <div class=container>
       <div class="jumbotron">
@@ -51,6 +60,8 @@
       </div>
 
     </div>
+
+
 
     <div class = container>
       <br>
