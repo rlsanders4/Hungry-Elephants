@@ -38,7 +38,8 @@ tr:nth-child(even) {
 
 <h2 align="center">Feeding Data</h2> 
 <div style="text-align:center">
-  <button type="button">Refresh</button>
+  <a href="/datalog/feedingdata" class="btn btn-primary mr-1">Refresh</a>
+  <a href="/datalog/completedTaskcsv" class="btn btn-primary mr-1">Download</a>
   <h2>  </h2>
 </div>
 
@@ -59,17 +60,17 @@ tr:nth-child(even) {
   </tr>
   {% for item in FeedingData %}
     <tr> 
-        <td>{{ item.TASK_UUID }}</td>
-        <td>{{ item.EXECUTE_AFTER_UNIX_TIME }}</td>
-        <td>{{ item.TARGET_SITE_CODE }}</td>
-        <td>{{ item.TARGET_FEEDER_NUMBER }}</td>
-        <td>{{ item.AMOUNT }}</td>
-        <td>{{ item.IF_RECIEVE_FROM_ANTENNA_NUMBER }}</td>
-        <td>{{ item.IF_RECIEVE_FROM_TAG_NUMBER }}</td>
-        <td>{{ item.INTERVAL_TIME }}</td>
-        <td>{{ item.EXPIRE_TIME }}</td>
-        <td>{{ item.REPEAT_X_TIMES }}</td>
-        <td>{{ item.COMPLETED_TIME }}</td>
+        <td>{{ item.task_uuid }}</td>
+        <td>{{ item.execute_after_UNIX_time }}</td>
+        <td>{{ item.target_site_code }}</td>
+        <td>{{ item.target_feeder_number }}</td>
+        <td>{{ item.amount }}</td>
+        <td>{{ item.if_recieve_from_antenna_number }}</td>
+        <td>{{ item.if_recieve_from_tag_number }}</td>
+        <td>{{ item.interval_time }}</td>
+        <td>{{ item.expire_time }}</td>
+        <td>{{ item.repeat_X_times}}</td>
+        <td>{{ item.completed_time}}</td>
 
 
     </tr>

@@ -1,18 +1,41 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import FeedingData
-from .models import RfidData
+from .models import RFIDLogData
+import csv  
 import sqlite3
-#from django.db import transaction
-#@transaction.non_atomic_requests
-# Create your views here.
+
 def feedingdata(request):
     feedingData = FeedingData.objects.all()
     return render(request, 'datalog/feedingdata.html', {'FeedingData':feedingData})
-#@transaction.non_atomic_requests
+
 def index(request):
-    rfidData = RfidData.objects.all()
-    return render(request, 'datalog/index.html', {'RfidData':rfidData})
+    rfidLogData = RFIDLogData.objects.all()
+    return render(request, 'datalog/index.html', {'RfidLogData':rfidLogData})
+def rfiddata(request):
+    rfidLogData = RFIDLogData.objects.all()
+    return render(request, 'datalog/index.html', {'RfidLogData':rfidLogData})
+
+def getRfidFile(request):  
+    response = HttpResponse(content_type='text/csv')  
+    response['Content-Disposition'] = 'attachment; filename="RFIDLogData.csv"'  
+    rfidData = RFIDLogData.objects.all()  
+    writer = csv.writer(response)  
+    for rfid in rfidData:  
+        writer.writerow([rfid.unix_time,rfid.site_code, rfid.antenna_tag, rfid.rfid])  
+    return response 
+
+def getCompletedTaskFile(request):  
+    response = HttpResponse(content_type='text/csv')  
+    response['Content-Disposition'] = 'attachment; filename="completedTask.csv"'  
+    feedingDatas = FeedingData.objects.all()  
+    writer = csv.writer(response)  
+    for feed in feedingDatas:  
+        writer.writerow([feed.task_uuid,feed.execute_after_UNIX_time,feed.target_site_code, feed.target_feeder_number,
+                        feed.amount, feed.if_recieve_from_antenna_number, feed.if_recieve_from_tag_number, feed.interval_time,
+                        feed.expire_time, feed.repeat_X_times, feed.completed_time])  
+    return response  
+
 
 def datalogDB(request):  
     con = sqlite3.connect('db.sqlite3')
