@@ -52,12 +52,17 @@ class DataPuller():
                                 try:
                                     feedingData = FeedingData()
                                     columns = line.split(',')
-                                    # TODO: FIND WHICH COLUMN IS THE TIMESTAMP FOR COMPLETION
-                                    feedingData.unix_time = columns[1]
-                                    feedingData.site_code = columns[2]
-                                    # if(columns[3] != "F0"):
-                                    #     feedingData.feeder = Feeder.objects.get(tag=columns[3])
-                                    feedingData.rfid_tag_number = columns[6]
+                                    feedingData.task_uuid = columns[0]
+                                    feedingData.execute_after_UNIX_time = columns[1]
+                                    feedingData.target_site_code = columns[2]
+                                    feedingData.target_feeder_number = columns[3]
+                                    feedingData.amount = columns[4]
+                                    feedingData.if_recieve_from_antenna_number = columns[5]
+                                    feedingData.if_recieve_from_tag_number = columns[6]
+                                    feedingData.interval_time = columns[7]
+                                    feedingData.expire_time = columns[8]
+                                    feedingData.repeat_X_times = columns[9]
+                                    feedingData.completed_time = columns[10]
                                     feedingData.save()
                                 except:
                                     problem = True
