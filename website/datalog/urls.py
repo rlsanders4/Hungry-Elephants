@@ -6,4 +6,5 @@ app_name = 'datalog'
 urlpatterns = [
     path('', views.index, name='index'),
     path('feedingdata', views.feedingdata, name='feedingdata'),
+    path('insertToDatabase', views.datalogDB, name='insertToDatabase'),
 ]
