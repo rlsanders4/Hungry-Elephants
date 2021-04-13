@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # This file aim at the purpose of reading from the TODO file, read from the rfid status, read from the feeder status,PIN status, then determine what to do.
 # It's action will be described as below:
 

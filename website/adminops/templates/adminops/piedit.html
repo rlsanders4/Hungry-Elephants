@@ -32,7 +32,6 @@
             <th scope="col">Site Code</th>
             <th scope="col">IP</th>
             <th scope="col">Port</th>
-            <th scope="col">Path</th>
             <th scope="col">Status</th>
             <th scope="col"></th>
         </tr>
@@ -43,7 +42,6 @@
             <td>{{ pi.site_code }}</td>
             <td>{{ pi.ip }}</td>
             <td>{{ pi.port }}</td>
-            <td>{{ pi.path }}</td>
             {% if pi.connected %}
                 <td class="text-success">Connected</td>
             {% else %}
@@ -66,6 +64,7 @@
     <form action="{{ piedit_url }}" method="post">
         {% csrf_token %}
         {{ form }}
+        <input type="hidden" name="id" value="{{pi.id}}">
         <input type="submit" value="Submit">
     </form>
 </div>

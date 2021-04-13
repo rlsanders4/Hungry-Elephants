@@ -3,9 +3,15 @@
 .vscode
 */__pycache__/*
 website/db.sqlite3
+# db/db.sqlite3
 # test files:
 website/adminops/static/adminops/*.png
 website/adminops/static/adminops/*.gif
 server_controller/schedules.todo.template
 server_controller/local_test.txt
 server_controller/tests/db.sqlite3
+# data:
+server_controller/data/*
+!server_controller/data/.empty
+# This repo:
+pi/rawdata/original_files/*

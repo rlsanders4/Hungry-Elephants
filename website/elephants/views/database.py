@@ -20,8 +20,8 @@ def create_active_preset_schedules(schedules):
         for s in schedules:
             print("original start time: "+str(s.start_time))
             print("original end time: "+str(s.end_time))
-            new_start_time = (s.start_time.astimezone(central).time().strftime('%H:%M:%S'))
-            new_end_time = s.end_time.astimezone(central).time().strftime('%H:%M:%S')
+            new_start_time = (s.start_date_time.astimezone(central).time().strftime('%H:%M:%S'))
+            new_end_time = s.end_date_time.astimezone(central).time().strftime('%H:%M:%S')
             print("new start time: "+new_start_time)
             print("new end time: "+str(new_end_time))
             currentDate = datetime.now(est).strftime('%Y-%m-%d')
@@ -29,8 +29,8 @@ def create_active_preset_schedules(schedules):
             new_startDT = datetime.strptime(fullTime, "%Y-%m-%d %H:%M:%S")
             fullTime = currentDate+" "+new_end_time
             new_endDT = datetime.strptime(fullTime, "%Y-%m-%d %H:%M:%S")
-            s.start_time = new_startDT
-            s.end_time = new_endDT
+            s.start_time_date = new_startDT
+            s.end_time_date = new_endDT
             s.active = True
             s.save()
 

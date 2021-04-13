@@ -18,8 +18,12 @@ def schedule(request):
             sched = Schedule()
             sched.elephant = form.cleaned_data['elephant']
             sched.start_time = form.cleaned_data['start_time']
+            sched.start_date = form.cleaned_data['start_date']
+            sched.start_date_time = datetime.combine(sched.start_date, sched.start_time)
             sched.end_time = form.cleaned_data['end_time']
-            sched.interval = form.cleaned_data['interval']
+            sched.end_date = form.cleaned_data['end_date']
+            sched.end_date_time = datetime.combine(sched.end_date, sched.end_time)
+            sched.interval = 60 * form.cleaned_data['interval']
             sched.max_feeds = form.cleaned_data['max_feeds']
             sched.feeder = form.cleaned_data['feeder']
             sched.save()
@@ -40,14 +44,16 @@ def preset_scheduling(request):
             currentDate = datetime.today().strftime('%Y-%m-%d')
             sched = Schedule()
             sched.elephant = form.cleaned_data['elephant']
-            st = form.cleaned_data['start_time'].strftime('%H:%M:%S')
-            new_st = currentDate+" "+st
-            sched.start_time = datetime.strptime(new_st, "%Y-%m-%d %H:%M:%S")
+            sched.start_time = form.cleaned_data['start_time'].strftime('%H:%M:%S')
+            sched.start_date = currentDate
+            new_st = sched.start_date+" "+sched.start_time
+            sched.start_date_time = datetime.strptime(new_st, "%Y-%m-%d %H:%M:%S")
 
-            et = form.cleaned_data['end_time'].strftime('%H:%M:%S')
-            new_et = currentDate+" "+et
-            sched.end_time = datetime.strptime(new_et, "%Y-%m-%d %H:%M:%S")
-            sched.interval = form.cleaned_data['interval']
+            sched.end_time = form.cleaned_data['end_time'].strftime('%H:%M:%S')
+            sched.end_date = currentDate
+            new_st = sched.end_date+" "+sched.end_time
+            sched.end_date_time = datetime.strptime(new_st, "%Y-%m-%d %H:%M:%S")
+            sched.interval = 60 * form.cleaned_data['interval']
             sched.max_feeds = form.cleaned_data['max_feeds']
             sched.feeder = form.cleaned_data['feeder']
             sched.active = False
