@@ -61,6 +61,7 @@ class Connector():
             return False
 
 
+
 class DummyConnector(Connector):
     def verify_connection(this, pi):
         return True

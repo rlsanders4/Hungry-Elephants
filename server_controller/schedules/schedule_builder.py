@@ -23,7 +23,7 @@ class ScheduleBuilder():
             except AssertionError as e:
                 this.logger.logWarn(tag + "Error linking schedule builder to distributor: " + e)
         # list of strings representing each schedule
-        this.schedules = list()
+        this.schedules = list("INIT EMPTY")
         # list of UUIDs for each schedule
         this.scheduleUUIDs = dict()
 

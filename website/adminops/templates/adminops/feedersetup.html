@@ -27,7 +27,7 @@
 <div class="container">
     <form action="{{ feedersetup_url }}" method="post">
         {% csrf_token %}
-        {{ form }}
+        {{ form.as_p }}
         <input type="hidden" id="pid" name="pid" value="{{ pi.id }}">
         <input type="submit" value="Submit">
     </form>
