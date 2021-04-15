@@ -21,6 +21,8 @@ restartHour = 4
 demomode = False
 noLogger = False
 
+# Sleep this amout of time just in case the previous setup had not exited yet
+time.sleep(executionDelay)
 if os.popen("pgrep -a python | grep 'initializer.py'").read().count('\n') > 1:
     # This means there are already an instence running.
     sys.exit("\nOnly one instence can be executed at the same time!\n")
