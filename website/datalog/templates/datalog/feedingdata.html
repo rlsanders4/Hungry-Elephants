@@ -36,28 +36,43 @@ tr:nth-child(even) {
 </head>
 <body>
 
-<h2 align="center">RFID Log Data</h2> 
+<h2 align="center">Feeding Data</h2> 
 <div style="text-align:center">
-  <a href="/datalog/rfiddata" class="btn btn-primary mr-1">Refresh</a>
-  <a href="/datalog/RFIDcsv" class="btn btn-primary mr-1">Download</a>
+  <a href="/datalog/feedingdata" class="btn btn-primary mr-1">Refresh</a>
+  <a href="/datalog/completedTaskcsv" class="btn btn-primary mr-1">Download</a>
   <h2>  </h2>
 </div>
 
 
 <table>
   <tr>
-    <th>Unix Time</th>
-    <th>Site Code</th>
-    <th>Antenna Tag</th>
-    <th>RFID Tag Number</th>
+    <th>Task UUID</th>
+    <th>Execute After Unix Time</th>
+    <th>Target Site Code</th>
+    <th>Target Feeder Number</th>
+    <th>Amount</th>
+    <th>If Recieve From Antenna Number</th>
+    <th>If Recieve From Tag Number</th>
+    <th>Interval Time</th>
+    <th>Expire Time</th>
+    <th>Repeat X Times</th>
+    <th>Completed Time</th>
   </tr>
-  {% for item in rfidLogData %}
+  {% for item in FeedingData %}
     <tr> 
-        <td>{{ item.unix_time }}</td>
-        <td>{{ item.site_code }}</td>
-        <td>{{ item.antenna_tag }}</td>
-        <td>{{ item.rfid }}</td>
-        
+        <td>{{ item.task_uuid }}</td>
+        <td>{{ item.execute_after_UNIX_time }}</td>
+        <td>{{ item.target_site_code }}</td>
+        <td>{{ item.target_feeder_number }}</td>
+        <td>{{ item.amount }}</td>
+        <td>{{ item.if_recieve_from_antenna_number }}</td>
+        <td>{{ item.if_recieve_from_tag_number }}</td>
+        <td>{{ item.interval_time }}</td>
+        <td>{{ item.expire_time }}</td>
+        <td>{{ item.repeat_X_times}}</td>
+        <td>{{ item.completed_time}}</td>
+
+
     </tr>
     {% endfor %}
 

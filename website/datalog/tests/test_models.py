@@ -2,7 +2,6 @@ from unittest import TestCase
 from datalog.models import FeedingData
 from adminops.models import Feeder
 # Create your tests here.
-class DatalogModelTest(TestCase):
 
     fdId = -1
     def setUp(self):

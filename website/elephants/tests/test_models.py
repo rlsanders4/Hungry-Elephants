@@ -2,14 +2,30 @@ from unittest import TestCase
 from elephants.models import Elephant
 from elephants.models import Preset
 from elephants.models import Schedule
+import pytest
 # Create your tests here.
+@pytest.mark.django_db(transaction=True)
 class ElephantsModelTest(TestCase):
+<<<<<<< HEAD
+    @classmethod
+   
+    def setUpTestData(cls):
+        #Set up non-modified objects used by all test methods
+        Elephant.objects.create(name ='Bob', rfid = '226000923031' )
+        Preset.objects.create(name = 'hello')
+        elephant1 = Elephant.objects.get(id=1)
+        Schedule.objects.create(elephant = elephant1, start_time = datetime.date(2021, 3, 1), end_time = datetime.date(2021, 3, 1), interval = datetime.timedelta(days=0, hours=2), max_feeds = 1, name = 'hello elephant')
+        
+        
+
+=======
 
 
 
     elephantId = Elephant.objects.all()[0].id
     presetId = Preset.objects.all()[0].id
     scheduleId = Schedule.objects.all()[0].id
+>>>>>>> master
 
 
     #elephant test
@@ -78,6 +94,27 @@ class ElephantsModelTest(TestCase):
         max_length = name._meta.get_field('name').max_length
         self.assertEquals(max_length,50)
 
+<<<<<<< HEAD
+    def test_schedule_presets(self):
+        schedule1 = Schedule.objects.get(id=1)
+        presets1 = schedule1.presets.create(name = 'test')
+        presets1.save()
+        self.assertEqual(schedule1.presets.get(pk = preset1.pk), presets1)
+        self.assertEqual(presets1.name, "test")
+    
+    def test_schedule_str(self):
+        try:
+
+            schedule = Schedule.objects.get(id=1)
+            expected_object_name = schedule.name
+            self.assertEquals(expected_object_name, str(schedule))
+        except IntegrityError:
+            pass
+   
+
+
+=======
+>>>>>>> master
 
     
     
