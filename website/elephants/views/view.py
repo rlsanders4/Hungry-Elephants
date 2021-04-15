@@ -18,10 +18,10 @@ def index(request):
         elephantInfo[ele] = elephantModuleData(ele)
 
     presets = Preset.objects.all()[:3]
-    presetColNum = 6/len(presets)
 
 
-    context = {'name': 'Hungry Elephants', 'elephantInfo': elephantInfo.items(), 'presets': presets, 'presetColNum':presetColNum}
+
+    context = {'name': 'Hungry Elephants', 'elephantInfo': elephantInfo.items(), 'presets': presets}
     return render(request, 'elephants/index.html', context)
 
 def feeders(request):
