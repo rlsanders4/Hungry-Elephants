@@ -11,7 +11,7 @@ class PiForm(ModelForm):
 class FeederForm(ModelForm):
     class Meta:
         model = Feeder
-        fields = ['name','tag']
+        fields = ['name','tag', 'pin']
 
 class AntennaForm(ModelForm):
     class Meta:

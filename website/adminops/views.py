@@ -87,6 +87,7 @@ def feedersetup(request):
             feeder.name = request.POST["name"]
             feeder.tag = request.POST["tag"]
             feeder.connected_to = pi
+            feeder.pin = request.POST["pin"]
             feeder.save()
             return redirect("/admin/piedit?id="+str(pi.id))
     else:
