@@ -19,6 +19,11 @@ class Feeder(models.Model):
     name = models.CharField(max_length=50, default="Feeder") #name seen by users
     tag = models.CharField(max_length=10) #feeder tag
     connected_to = models.ForeignKey(Pi, on_delete=models.CASCADE) #pi connection
+    pin = models.IntegerField(default=2,
+        validators=[
+            MaxValueValidator(40),
+            MinValueValidator(1)
+        ]) # pin to activate this feeder
 
     def __str__(self):
         return self.name
