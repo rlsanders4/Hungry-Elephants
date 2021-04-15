@@ -1,3 +1,5 @@
+# test of FTP connection
+
 from ftplib import FTP
 
 ftp = FTP("192.168.0.4")
