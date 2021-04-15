@@ -73,7 +73,7 @@ class Distributor():
             configStr = config.DEFAULT_SITE + "\nIP = " + str(pi.ip) + "\nSITE_CODE = " + str(pi.site_code) + "\nSerialAdapterAddress = " + config.DEFAULT_SERIAL + "\n"
             configStr += "FEEDER_NUMBER = " + str(len(feeders)) + "\n"
             for feeder in feeders:
-                configStr += "F" + feeder.name + "_PIN = " + str(feeder.pin) + "\n"
+                configStr += feeder.tag + "_PIN = " + str(feeder.pin) + "\n"
 
             with open(config.DATA_DIR + str(pi.id) + config.CONFIG_NAME, "w") as file:
                 file.write(configStr)

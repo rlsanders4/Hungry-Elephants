@@ -85,7 +85,11 @@ def feedersetup(request):
             pi = Pi.objects.get(id=request.POST["pid"])
             feeder = Feeder()
             feeder.name = request.POST["name"]
-            feeder.tag = request.POST["tag"]
+            if((len(request.POST["tag"])>0) and (request.POST["tag"][0].upper()=="F")):
+                tag = "F" + request.POST["tag"][1:]
+            else:
+                tag = "F" + request.POST["tag"]
+            feeder.tag = tag
             feeder.connected_to = pi
             feeder.pin = request.POST["pin"]
             feeder.save()
