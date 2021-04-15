@@ -7,7 +7,7 @@ feederStatusFileName = "/home/pi/shared_data/feeder.status"
 scheduleTODOFileName = "/home/pi/shared_data/schedule.todo"
 rfidStatusFileName = "/home/pi/rawdata/rfidstatus.txt"
 pinTODOFolderName = "/home/pi/rawdata/tasks_running"
-scheduleTODOTempletFileName = "/home/pi/shared_data/schedule.todo.templet"
+scheduleTODOTempletFileName = "/home/pi/shared_data/schedule.todo.template"
 completedTODOFileName = "/home/pi/shared_data/completed.todo"
 
 # Go through the feeder status cache. For each line:
