@@ -10,6 +10,13 @@ from .view import edit_preset_page, edit_preset_page2, index
 from django.contrib import messages
 
 
+'''
+This is a method that returns a Schedule form
+and handles the form submission as well
+
+if the form is valid, a schedule object will be 
+created in the database
+'''
 def schedule(request):
     model = Schedule
     if request.method=='POST':
@@ -36,7 +43,9 @@ def schedule(request):
     print("in normal scheduling module")
     return render(request, 'elephants/schedule_module.html', {'form':form})
 
-
+'''
+Same as the scheduling method but for preset schedule
+'''
 def preset_scheduling(request):
     if request.method=='POST':
         form = PresetForm(request.POST)

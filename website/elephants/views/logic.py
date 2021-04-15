@@ -10,6 +10,10 @@ est = pytz.timezone("US/Eastern")
 utc = pytz.utc
 fmt = "%Y-%m-%d %H:%M:%S"
 
+
+'''
+returns data for the home page tiles
+'''
 def elephantModuleData(elephant):
     erifd = elephant.rfid
     feedingDataQS = FeedingData.objects.filter(rfid_tag_number = erifd).order_by('-unix_time')
