@@ -26,7 +26,7 @@ if len(sys.argv) > 1:
 
 if not demomode:
     ser = serial.Serial(
-    port='/dev/ttyUSB0',
+    port = serialPort,
     baudrate = 19200,
     parity=serial.PARITY_ODD,
     stopbits=serial.STOPBITS_ONE,
