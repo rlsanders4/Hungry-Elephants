@@ -1,4 +1,4 @@
 Only one line should be in this file, indicating what this feeder needs to output now.
-If there are more than one line, only the task listed in the feeder status file will be executed and all other files will be cleared.
+If there are more than one line, only the task listed in the feeder status file will be executed and all other tasks will be cleared.
 # TARGET_SITE_CODE,FEEDER_NUMBER,GPIO_PIN_NUMBER,ACTIVE_TASK_UUID,AMOUNT
 AAA,F1,3,1605f11d-83e0-4f33-8c6f-c126e72196b2,1
