@@ -57,6 +57,8 @@ Alternatively, connect to the pi VIA RDP is also possible. Write the PI's IP add
 
 11.Click "Connect a raspberry pi", fill in the info accordingly, the default port for ftp connection to pi is 21, Name can be anything, and the site code is for the antenna box you are going to connect to the pi. (note, you can have multiple virtual PIs with the same IP and port number but different site code and feeders here. This should be similar to the config you wrote in config.ini on pi.
 
+12.You now have to restart the server by: first enter ctrl+c in the terminal window twice to end the tty session, then you have to restart the server (to apply the connection settings by using "docker container stop rfid_feeder" followed by "docker container start rfid_feeder"
+
 12.Add Antennas and Feeders accordingly to the PI you just created.
 
 13.Now go to Home or scheduling to create your schedule! 
