@@ -19,7 +19,7 @@ def elephantModuleData(elephant):
     feedingDataQS = FeedingData.objects.filter(if_recieve_from_tag_number = erifd).order_by('-completed_time')
     feedingData = list()
     for fd in feedingDataQS:
-        if(int(fd.unix_time)>=int(time.time())-84600):
+        if(int(fd.completed_time)>=int(time.time())-84600):
             feedingData.append(fd)
 
     lastfed = "never"
@@ -27,7 +27,7 @@ def elephantModuleData(elephant):
     endOfSchedule = "No Active Schedule"
 
     if(feedingData):
-        lastfed = datetime.fromtimestamp(int(feedingData[0].unix_time), est).strftime("%Y-%m-%d %H:%M:%S")
+        lastfed = datetime.fromtimestamp(int(feedingData[0].completed_time), est).strftime("%Y-%m-%d %H:%M:%S")
         numberFeedingsToday = len(feedingData)
 
     activeSchedules =  Schedule.objects.filter(elephant=elephant).filter(active=True).order_by('-start_time')
