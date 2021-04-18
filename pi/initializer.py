@@ -6,7 +6,6 @@ from netifaces import interfaces, ifaddresses, AF_INET
 import time
 import datetime
 import filecmp 
-import subprocess
 
 
 
@@ -313,9 +312,9 @@ while True:
     os.system('sudo chmod -R 777 /home/pi/rawdata')
     
     if not demomode:
-        subprocess.Popen(["python3","/home/pi/controller.py"], shell=True)
+        os.system('python3 /home/pi/controller.py&')
         time.sleep(executionDelay)
-        subprocess.Popen(["python3","/home/pi/controller.py"], shell=True)
+        os.system('python3 /home/pi/ACTIVATOR.py&')
         time.sleep(endDelay)
     #else:
         # os.system('python3 /home/pi/controller.py')
