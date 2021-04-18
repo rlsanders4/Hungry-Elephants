@@ -8,6 +8,7 @@ from datalog.models import RFIDLogData, FeedingData
 from os import path
 from ftplib import FTP
 from . import config
+from .connector import Connector
 
 tag = "(DataPuller) "
 
@@ -76,7 +77,8 @@ class DataPuller():
                 this.logger.logWarn(tag + str(e))
                 this.logger.logWarn(tag + "Error pulling data from pi " + pi.name)
                 pi.connected = False
-                pi.save()
+                if(not Connector.update_pi(pi)):
+                    this.logger.logWarn(tag + "Error updating pi. Was it deleted?")
 
     def pullLogData(this):
         for pi in this.pis:
@@ -121,7 +123,8 @@ class DataPuller():
                 this.logger.logWarn(tag + str(e))
                 this.logger.logWarn(tag + "Error pulling data from pi " + pi.name)
                 pi.connected = False
-                pi.save()
+                if(not Connector.update_pi(pi)):
+                    this.logger.logWarn(tag + "Error updating pi. Was it deleted?")
 
     def clearLogDataFiles(this):
         for pi in this.pis:
@@ -138,7 +141,8 @@ class DataPuller():
             except:
                 this.logger.logWarn(tag + "Error connecting to pi " + pi.name)
                 pi.connected = False
-                pi.save()
+                if(not Connector.update_pi(pi)):
+                    this.logger.logWarn(tag + "Error updating pi. Was it deleted?")
             this.logDataLine[pi.id] = 0
         this.updateState()
 
@@ -157,7 +161,8 @@ class DataPuller():
             except:
                 this.logger.logWarn(tag + "Error connecting to pi " + pi.name)
                 pi.connected = False
-                pi.save()
+                if(not Connector.update_pi(pi)):
+                    this.logger.logWarn(tag + "Error updating pi. Was it deleted?")
             this.completedLine[pi.id] = 0
         this.updateState()
 

@@ -6,6 +6,7 @@
 from adminops.models import Pi, Feeder
 from ftplib import FTP
 from . import config
+from .connector import Connector
 
 tag = "(Distributor) "
 
@@ -47,7 +48,8 @@ class Distributor():
                 this.logger.logWarn(tag + str(e))
                 this.logger.logWarn(tag + "Error sending schedule to pi " + pi.name)
                 pi.connected = False
-                pi.save()
+                if(not Connector.update_pi(pi)):
+                    this.logger.logWarn(tag + "Error updating pi. Was it deleted?")
     
     def push_configs_if_updated(this):
         oldFeeders = this.feeders

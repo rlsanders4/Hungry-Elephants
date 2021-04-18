@@ -23,7 +23,10 @@ class Connector():
                 pi.connected = this.verify_connection(pi)
                 if(pi.connected):
                     this.logger.logInfo(tag + "Pi " + pi.name + " connected")
-                pi.save()
+                try:
+                    pi.save(update_fields=["connected"])
+                except:
+                    this.logger.logWarn(tag + "Error updating Pi. Was it deleted?")
         else:
             oldpis = this.pis
             this.pis = list(Pi.objects.all())
@@ -33,7 +36,10 @@ class Connector():
                     pi.connected = this.verify_connection(pi)
                     if(pi.connected):
                         this.logger.logInfo(tag + "Pi " + pi.name + " connected")
-                    pi.save()
+                    try:
+                        pi.save(update_fields=["connected"])
+                    except:
+                        this.logger.logWarn(tag + "Error updating Pi. Was it deleted?")
 
     def get_pis(this):
         if(len(this.pis) == 0):
@@ -43,12 +49,18 @@ class Connector():
     def dc_pis(this):
         for pi in this.pis:
             pi.connected = False
-            pi.save()
+            try:
+                pi.save(update_fields=["connected"])
+            except:
+                this.logger.logWarn(tag + "Error updating Pi. Was it deleted?")
 
     def update_connection_status(this):
         for pi in this.pis:
             pi.connected = this.verify_connection(pi)
-            pi.save()
+            try:
+                pi.save(update_fields=["connected"])
+            except:
+                this.logger.logWarn(tag + "Error updating Pi. Was it deleted?")
 
     def verify_connection(this, pi):
         try:
@@ -58,6 +70,14 @@ class Connector():
             return True
         except Exception:
             this.logger.logWarn(tag + "Pi " + pi.name + " unable to connect")
+            return False
+
+    @staticmethod
+    def update_pi(pi):
+        try:
+            pi.save(update_fields=["connected"])
+            return True
+        except:
             return False
 
 
