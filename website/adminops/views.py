@@ -32,6 +32,7 @@ def pisetup(request):
             pi.name = request.POST["name"]
             pi.ip = request.POST["ip"]
             pi.port = request.POST["port"]
+            pi.site_code = request.POST["site_code"]
             pi.save()
             return HttpResponseRedirect(reverse('adminops:index'))
     else:
@@ -50,13 +51,14 @@ def piedit(request):
             pi.name = request.POST["name"]
             pi.ip = request.POST["ip"]
             pi.port = request.POST["port"]
+            pi.site_code = request.POST["site_code"]
             pi.save()
             return HttpResponseRedirect(reverse('adminops:index'))
     else:
         pi = Pi.objects.get(id=request.GET["id"])
         feeders = Feeder.objects.filter(connected_to=pi.id)
         antennas = Antenna.objects.filter(connected_to=pi.id)
-        form = PiForm(initial={"name": pi.name, "ip": pi.ip, "port": pi.port}, instance=pi)
+        form = PiForm(instance=pi)
     return render(request, 'adminops/piedit.html', {"name": "Hungry Elephants Administration", "pi": pi, "form": form, "feeders": feeders, "antennas": antennas})
 
 # view for returning ONLY the pi list

@@ -16,7 +16,7 @@ returns data for the home page tiles
 '''
 def elephantModuleData(elephant):
     erifd = elephant.rfid
-    feedingDataQS = FeedingData.objects.filter(rfid_tag_number = erifd).order_by('-unix_time')
+    feedingDataQS = FeedingData.objects.filter(if_recieve_from_tag_number = erifd).order_by('-completed_time')
     feedingData = list()
     for fd in feedingDataQS:
         if(int(fd.unix_time)>=int(time.time())-84600):
