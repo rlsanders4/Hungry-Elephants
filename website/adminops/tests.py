@@ -12,6 +12,21 @@ class AdminopsModelTest(TestCase):
     feederId = Feeder.objects.all()[0].id
     antennaId = Antenna.objects.all()[0].id
 
+    def setUp(self):
+        pi = None
+        if self.piId == None:
+            pi = Pi(name = "Pi", port = 1235, connected = False)
+            pi.save()
+            self.piId = pi.id
+        if self.feederId == None:
+            feeder =  Feeder(name = "Feeder Test", tag = "feeder tag", connected_to = pi)
+            feeder.save()
+            self.feederId = feeder.id
+        if self.antennaId == None:
+            antenna = Antenna(name = "Ant", tag = "tag1", connectedTo =pi)
+            antenna.save()
+            self.antennaId = antenna.id
+
     #Pi test
     def test_pi_name_label(self):
         name = Pi.objects.get(id=self.piId)
@@ -28,10 +43,6 @@ class AdminopsModelTest(TestCase):
         field_label = name._meta.get_field('port').verbose_name
         self.assertEquals(field_label,'port')
 
-    def test_pi_path_label(self):
-        name = Pi.objects.get(id=self.piId)
-        field_label = name._meta.get_field('path').verbose_name
-        self.assertEquals(field_label,'path')
 
     def test_pi_connected_label(self):
         name = Pi.objects.get(id=self.piId)
@@ -74,3 +85,11 @@ class AdminopsModelTest(TestCase):
         name = Antenna.objects.get(id=self.antennaId)
         field_label = name._meta.get_field('connected_to').verbose_name
         self.assertEquals(field_label,'connected to')
+
+    def cleanUp(self):
+        feeder = Feeder.objects.get(pk = self.feederId)
+        feeder.delete()
+        feeder.save()
+        pi = Pi.objects.get(pk = self.piId)
+        pi.delete()
+        pi.save()

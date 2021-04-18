@@ -24,11 +24,25 @@ LOGDATA_NAME = "logdata.csv"
 COMPLETED_DIR = "shared_data"
 # name of the completed schedules file
 COMPLETED_NAME = "completed.todo"
+# path to the config file
+CONFIG_DIR = "shared_data"
+# name of the config file
+CONFIG_NAME = "config.ini"
 
 # number for dummy data files
 DUMMY_NUM = 99
 # file for dummy state
 DUMMY_STATE = "dummy_state"
-
+# path to the directory containing COMPLETED_DIR and LOGDATA_DIR. For the pi images, this isn't needed. leave empty unless testing
 TEST_PATH = ""
+
+##
+## config.ini defaults
+##
+# default pin # to configure on each Pi if none set
+DEFAULT_PIN = "2"
+# default serial adapter address
+DEFAULT_SERIAL = "/dev/ttyUSB0"
+# default site number
+DEFAULT_SITE = "[site1]"
 

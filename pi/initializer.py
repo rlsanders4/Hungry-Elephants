@@ -6,6 +6,8 @@ from netifaces import interfaces, ifaddresses, AF_INET
 import time
 import datetime
 import filecmp 
+import subprocess
+
 
 
 
@@ -21,6 +23,8 @@ restartHour = 4
 demomode = False
 noLogger = False
 
+# Sleep this amout of time just in case the previous setup had not exited yet
+time.sleep(executionDelay)
 if os.popen("pgrep -a python | grep 'initializer.py'").read().count('\n') > 1:
     # This means there are already an instence running.
     sys.exit("\nOnly one instence can be executed at the same time!\n")
@@ -308,9 +312,9 @@ while True:
     os.system('sudo chmod -R 777 /home/pi/rawdata')
     
     if not demomode:
-        os.system('python3 /home/pi/controller.py')
+        subprocess.Popen(["python3","/home/pi/controller.py"], shell=True)
         time.sleep(executionDelay)
-        os.system('python3 /home/pi/ACTIVATOR.py')
+        subprocess.Popen(["python3","/home/pi/controller.py"], shell=True)
         time.sleep(endDelay)
     #else:
         # os.system('python3 /home/pi/controller.py')

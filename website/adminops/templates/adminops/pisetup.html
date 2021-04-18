@@ -25,7 +25,7 @@
 <div class="container">
     <form action="{{ pisetup_url }}" method="post">
         {% csrf_token %}
-        {{ form }}
+        {{ form.as_p }}
         <input type="submit" value="Submit">
     </form>
 </div>

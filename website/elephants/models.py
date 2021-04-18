@@ -4,7 +4,9 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from adminops.models import Feeder
 
 
-# Elephant model
+'''
+This model represents an elephant
+'''
 class Elephant(models.Model):
     name = models.CharField(max_length=40)
     rfid = models.CharField(max_length=50)
@@ -29,9 +31,14 @@ The Schedule model class represents the basic building block for automated eleph
 A schedule includes the following:
     Elephant
     Start Time
+    start Date
     End Time
+    End Date
     Interval Length
     Max # of Feeds
+    Feeder (foreign key to a feeder object)
+    Preset (links schedules to presets via many to many field)
+    activate (or not) so it's a boolean
 '''
 class Schedule(models.Model):
     elephant = models.ForeignKey(Elephant, on_delete=models.CASCADE)  # reference to existing elephant in DB
@@ -53,6 +60,9 @@ class Schedule(models.Model):
             return self.name
         return "Schedule: " + str(self.id)
 
+'''
+Same as the schedule class but doesn't have start or end date
+'''
 class PresetSchedule(models.Model):
     elephant = models.ForeignKey(Elephant, on_delete=models.CASCADE)  # reference to existing elephant in DB
     start_time = models.TimeField()  # start time

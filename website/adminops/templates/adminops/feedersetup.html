@@ -25,9 +25,10 @@
 </div>
 
 <div class="container">
+    <p>Feeder tags must start with an <b>F</b>. If it does not start with an F, one will be added for you.</p>
     <form action="{{ feedersetup_url }}" method="post">
         {% csrf_token %}
-        {{ form }}
+        {{ form.as_p }}
         <input type="hidden" id="pid" name="pid" value="{{ pi.id }}">
         <input type="submit" value="Submit">
     </form>

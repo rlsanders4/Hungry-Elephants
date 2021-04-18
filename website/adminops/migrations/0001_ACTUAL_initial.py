@@ -10,6 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('auth', '0012_alter_user_first_name_max_length')
     ]
 
     operations = [
@@ -19,7 +20,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(default='Pi', max_length=50)),
                 ('ip', models.GenericIPAddressField(protocol='IPv4', unique=True)),
-                ('port', models.IntegerField(validators=[django.core.validators.MinValueValidator(0), django.core.validators.MaxValueValidator(65535)])),
+                ('port', models.IntegerField(default=21, validators=[django.core.validators.MinValueValidator(0), django.core.validators.MaxValueValidator(65535)])),
                 ('connected', models.BooleanField(default=False)),
                 ('site_code', models.CharField(default='AAA', max_length=10, unique=True)),
             ],
@@ -30,6 +31,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(default='Feeder', max_length=50)),
                 ('tag', models.CharField(max_length=10)),
+                ('pin', models.IntegerField(default=2, validators=[django.core.validators.MinValueValidator(0), django.core.validators.MaxValueValidator(27)])),
                 ('connected_to', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='adminops.pi')),
             ],
         ),

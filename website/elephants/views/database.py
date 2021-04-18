@@ -36,24 +36,41 @@ def create_active_preset_schedules(schedules):
 
     print("preset schdules are updated!")
 
+
+'''
+Returns active schedules from the database
+'''
 def active_schedules(request):
     schedules = Schedule.objects.filter(active=True).order_by('-start_time')
     context = {'schedules' : schedules}
     return render(request, 'elephants/active_schedules.html', context)
 
+'''
+deletes a preset schedule
+'''
 def delete_preset_schedule(request):
     schedule = Schedule.objects.get(id=request.GET["id"])
     schedule.delete()
     return edit_preset_page2(request, request.GET["presetid"])
 
+'''
+deletes a schedule from the active schedule page
+'''
 def delete_schedule_activeschedulepage(request):
     delete_schedule(request.GET["id"])
     return active_schedules(request)
 
+
+'''
+deletes a schedule
+'''
 def delete_schedule(id):
     Schedule.objects.get(pk=id).delete()
 
 
+'''
+executes a preset
+'''
 def execute_preset(request):
     preset = Preset.objects.get(id=request.GET['id'])
     schedules = preset.schedule_set.all()
@@ -61,10 +78,17 @@ def execute_preset(request):
     messages.info(request, "Preset " + str(request.GET['id']) + " is activated")
     return index(request)
 
+'''
+marks a schedule as inactive and returns the active schedules page
+'''
 def mark_inactive_from_active(request):
     mark_inactive(request.GET["id"])
     return active_schedules(request)
 
+
+'''
+just marks a schedule as inactive
+'''
 def mark_inactive(id):
     schedule = Schedule.objects.get(pk=id)
     schedule.active = False
