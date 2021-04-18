@@ -1,15 +1,14 @@
-# FUTURE TODO TASKS
-# The program will activate feeder AMOUNT times if the program loads this list after the EXECUTE_AFTER_UNIX_TIME. 
-# Last five data fields can be skiped and will default to 1,A0,0_0,43200,1; which means dispence one dose of food regardless of tag and antenna status, the task can be executed once and will expire in 12 hours since the start time.
-# By default TODO list item will expire after 12 hours(43200 seconds).
+# Template file stores all the schedules sent to the pi. The pi will not be modifying this file in any way. It will only make sure it’s copy, schedule.todo is up to date with this file. The schedule.todo will be updated constantly by the pi to reflect and store the execution states of the current iteration.
+# The data fields are as follows:
+# TASK_UUID,EXECUTE_AFTER_UNIX_TIME,TARGET_SITE_CODE,TARGET_FEEDER_NUMBER,AMOUNT(times of feeder activates in one go), IF_RECIEVE_FROM_ANTENNA_NUMBER,IF_RECIEVE_FROM_TAG_NUMBER,INTERVAL_TIME,EXPIRE_TIME,REPEAT_X_TIMES
+# In general. the program will activate feeder AMOUNT times if the program loads this list after the EXECUTE_AFTER_UNIX_TIME. 
+# Last five data fields can be skipped and will default to 1,A0,0_0,43200,1; which means to dispense one dose of food when any signal had been received from the antenna, the task can be executed once per hour and will expire in 12 hours (43200 seconds) from the start time.
 # By default the INTERVAL_TIME is going to be 1 hour (3600 seconds). This means the elephant can only get food one hour after they are first detected.
-# Note: as the program is stateless, the EXECUTE_AFTER_UNIX_TIME is going to be updated once an elephant is present. The program is going to write a new time using the current time + INTERVAL_TIME.
-# It may be wise to have an upper limit for the amount of food dispended.
-# The TODO file interpreter will only execute one TODO task one time for each feeder connected. Only the first line for each feeder will be executed thus later lines will be blocked by previous lines
-# The TODO file interpreter will subtract count from the list if the task have been completed and all tasks with a count of one (or lower) will be removed
-# The TODO file interpreter will read feeder status from files under folder feeder_status and an artificial limit of 16 feeders can be connected to each system.
-# TASK_UUID,EXECUTE_AFTER_UNIX_TIME,TARGET_SITE_CODE,TARGET_FEEDER_NUMBER,AMOUNT(times of feeder activates in one go),
-# IF_RECIEVE_FROM_ANTENNA_NUMBER,IF_RECIEVE_FROM_TAG_NUMBER,INTERVAL_TIME,EXPIRE_TIME,REPEAT_X_TIMES
+# Note: as the program is stateless, the EXECUTE_AFTER_UNIX_TIME is going to be updated in schedule.todo once an elephant is present. The program is going to write a new time using the current time + INTERVAL_TIME.
+# The TODO file interpreter (controller) will only execute one TODO task at one time for each feeder connected if conditions met. The lines before other lines will be executed first before other lines (this makes a general case line should be placed at bottom if wanted)
+# The TODO file interpreter (controller) will subtract count from the list if the task have been completed and all tasks with a count of one (or lower) will be removed
+# The TODO file interpreter (controller) will read feeder status from files under folder feeder_status
+
 1605f11d-83e0-4f33-8c6f-c126e72196b2,1614260512,AAA,F1,1
 3424c3fc-b638-490c-b92d-e3d3c4b9b2c5,1614200000,AAB,F2,1
 7b5f796e-0ab3-4e53-8450-89ac34fe71d8,1614260512,SSS,F2,3

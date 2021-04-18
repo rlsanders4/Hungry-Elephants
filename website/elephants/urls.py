@@ -4,6 +4,13 @@ from . import views
 
 #be sure to give every path a name variable so when we create links in the html templates we can reference these urls
 app_name = 'elephants'
+
+'''
+These are the urls that return views
+
+Since the app name is elephants, to get to the index page you'd go to /elephants
+if you want to go to preset scheduling, you go to /elephants/presetscheduling
+'''
 urlpatterns = [
     path('', views.index, name='index'),
     path('feeders', views.feeders, name='feeders'),

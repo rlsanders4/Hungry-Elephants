@@ -7,6 +7,8 @@ from django import forms
 from datetime import datetime
 from datetime import timedelta
 
+
+#this a form for schedules
 class ScheduleForm(forms.ModelForm):
     class Meta:
         model = Schedule
@@ -22,6 +24,7 @@ class ScheduleForm(forms.ModelForm):
             'feeder': forms.Select(attrs={'class': 'form-control col-4'}),
         }
 
+#this is basically the same as the schedule form but it doesn't include end and start date
 class PresetForm(forms.ModelForm):
     class Meta:
         model = PresetSchedule

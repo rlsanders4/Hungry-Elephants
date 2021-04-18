@@ -1,5 +1,10 @@
-# Server-side controller
-# main.py
+"""
+Server-side controller
+main.py
+
+This is the main entry point for running the server-side controller.
+It creates two extra threads to do work and polls for user input to stop.
+"""
 
 # python library imports
 import sys
@@ -8,7 +13,7 @@ import threading
 
 print("####################\n##### Upstream controller starting...")
 
-# get cmd line arg
+# get cmd line args
 CLEAN, CLEAN_HARD, VERBOSE, SUPPRESS, DUMMY = False, False, False, False, False
 for arg in sys.argv:
     if(arg == "-c" or arg == "--clean"):
@@ -58,7 +63,7 @@ from adminops.models import Pi
 from elephants.models import Schedule, Elephant
 from datalog.models import RFIDLogData, FeedingData
 
-# setup dummy data
+# setup dummy data if necessary
 if DUMMY:
     dummy_data.createDummyData()
 
@@ -70,6 +75,8 @@ class Thread(threading.Thread):
         this.stopEvent = threading.Event()
     def wait(this, amount):
         time_elapsed = 0
+        # sleep on short interval repeatedly until desired time elapses
+        # allows "sleeping" for a long time without entirely blocking the thread
         while not this.stopEvent.is_set() and time_elapsed < amount:
             time.sleep(Thread.interval)
             time_elapsed += Thread.interval
@@ -95,13 +102,16 @@ class DistributorThread(Thread):
             distributor = DummyDistributor(pis, logger)
         else:
             distributor = Distributor(pis, logger)
+        distributor.push_configs()
         scheduleBuilder = ScheduleBuilder(distributor, logger)
         while not this.stopEvent.is_set():
-             # attempt to build and distribute schedules
+            distributor.push_configs_if_updated()
+            # attempt to build and distribute schedules
             scheduleBuilder.run()
             # verify pi connections and update
             connector.update_connection_status()
             connector.connect_pis()
+            # update pis in the distributor
             distributor.pis = connector.get_pis()
             this.wait(DistributorThread.interval)
         connector.dc_pis()
@@ -128,6 +138,7 @@ class DataPullerThread(Thread):
             dataPuller = DummyDataPuller(pis, logger)
         else:
             dataPuller = DataPuller(pis, logger)
+        # optional data cleaning
         if(CLEAN):
             dataPuller.cleanState()
         elif(CLEAN_HARD):
@@ -141,6 +152,7 @@ class DataPullerThread(Thread):
             # verify pi connections and update
             connector.update_connection_status()
             connector.connect_pis()
+            # update pis in the distributor
             dataPuller.pis = connector.get_pis()
             this.wait(DataPullerThread.interval)
         connector.dc_pis()

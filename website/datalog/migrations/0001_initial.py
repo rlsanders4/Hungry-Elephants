@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('adminops', '0001_initial'),
+        ('adminops', '0001_ACTUAL_initial'),
     ]
 
     operations = [
