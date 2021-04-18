@@ -44,7 +44,7 @@ while True:
         os.system("sudo python3 /home/pi/ACTIVATOR.py &")
     if event == "Backup to Image":
         os.system("sudo bash /home/pi/createImage.sh")
-    if event == "HARD reset everything from remote":
+    if event == "HARD reset":
         os.system("sudo bash /home/pi/hard_reset.sh")
     # End program if user closes window or
     # presses the exit button
