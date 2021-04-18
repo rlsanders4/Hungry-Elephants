@@ -25,6 +25,6 @@ COPY ./run.sh /code/run.sh
 # Migrate
 # RUN python /code/website/manage.py migrate
 
-EXPOSE 8000
+EXPOSE 8001
 
 CMD ["bash", "./run.sh"]
