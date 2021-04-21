@@ -1,5 +1,7 @@
 # Hungry-Elephants
 
+User manual: https://cloud.zopyr.us/index.php/s/wgH6ZD9wAFWZAed
+
 ### Current Python Version: 3.8.5
 
 Docker:
@@ -120,7 +122,7 @@ Installing and Running the Server on bare metal:
 
 3. Again in the main directory, run `python3 -m pip install -r requirements.txt` to install dependencies.
 
-4. Change to the /website subfolder and run `python3 manage.py runserver` to run the server.
+4. Run `bash run.sh` to run the server and controller at the same time.
 
 
 This server is supposed to write schedule files and send them via ftp to raspberry pis running python scripts. The server is also supposed to read back from the raspberry pis and display the datas in log pages.
